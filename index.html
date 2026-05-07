@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thông Báo Toàn Chùa</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --green-dark:#1a5c3a;--green-mid:#2d7a52;--green-light:#e8f5ee;--green-pale:#f2faf5;
+  --red:#c0392b;--red-light:#fdecea;
+  --orange:#e8720a;--orange-light:#fff0e4;
+  --yellow:#c9950a;--yellow-light:#fffbdf;
+  --teal:#00796b;--teal-light:#e0f2f1;
+  --gray-bg:#f5f0e8;--gray-border:#e2d9cc;--gray-text:#6b7280;--dark:#2c1a0e;
+  --font:'Be Vietnam Pro',sans-serif;
+  --shadow-sm:0 1px 4px rgba(0,0,0,.07);--shadow-md:0 4px 16px rgba(0,0,0,.1);--shadow-lg:0 8px 32px rgba(0,0,0,.15);
+  --card-bg:#fff;
+}
+html,body,input,select,textarea,button{font-family:var(--font);}
+html,body{background:var(--gray-bg);color:var(--dark);min-height:100vh;overflow-x:hidden;font-size:16px;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-thumb{background:#d1c8b0;border-radius:3px;}
+.page-wrap{max-width:780px;margin:0 auto;padding:28px 20px 60px;}
+.page-title-block{margin-bottom:24px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.page-title-text{display:flex;flex-direction:column;align-items:flex-start;}
+.page-title{font-size:26px;font-weight:900;color:#7a3a00;letter-spacing:-.3px;}
+.page-lunar{font-size:13px;color:#00796b;margin-top:5px;font-weight:700;letter-spacing:.3px;}
+.top-bar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:20px;background:#fff;border:1.5px solid var(--gray-border);border-radius:24px;padding:5px 8px 5px 14px;}
+.filter-label{font-size:12px;font-weight:700;color:#9a7a50;white-space:nowrap;margin-right:2px;flex-shrink:0;}
+.filter-btn{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;border:1.5px solid transparent;background:transparent;font-size:12px;font-weight:700;color:var(--gray-text);cursor:pointer;transition:all .12s;white-space:nowrap;}
+.filter-btn:hover{background:var(--gray-bg);}
+.filter-btn.active{border-color:transparent;}
+.filter-btn.fb-all.active{background:#f5f0e8;color:#5a3d1a;border-color:#d4c4a0;}
+.filter-btn.fb-red.active{background:var(--red-light);color:var(--red);border-color:var(--red);}
+.filter-btn.fb-orange.active{background:var(--orange-light);color:var(--orange);border-color:var(--orange);}
+.filter-btn.fb-yellow.active{background:var(--yellow-light);color:var(--yellow);border-color:var(--yellow);}
+.filter-btn.fb-teal.active{background:var(--teal-light);color:var(--teal);border-color:var(--teal);}
+.fdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.bar-sep{width:1px;height:18px;background:var(--gray-border);flex-shrink:0;margin:0 2px;}
+.search-inline{display:flex;align-items:center;gap:5px;padding:4px 8px;min-width:140px;flex:1;}
+.search-inline input{border:none;outline:none;font-size:13px;font-family:var(--font);color:var(--dark);background:transparent;width:100%;}
+.search-inline input::placeholder{color:#bbb;}
+.section-block{margin-bottom:32px;}
+.section-head{display:flex;align-items:center;gap:7px;margin-bottom:12px;}
+.section-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.section-name{font-size:12px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;}
+.section-count{font-size:11px;font-weight:700;color:#aaa;margin-left:2px;}
+.section-line{flex:1;height:1px;background:var(--gray-border);}
+.notif-card{background:var(--card-bg);border-radius:11px;border:1.5px solid var(--gray-border);overflow:hidden;transition:box-shadow .15s,transform .15s;margin-bottom:10px;display:flex;flex-direction:row;}
+.notif-card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px);}
+.notif-card.c-red{border-left:4px solid var(--red);}
+.notif-card.c-orange{border-left:4px solid var(--orange);}
+.notif-card.c-yellow{border-left:4px solid var(--yellow);}
+.notif-card.c-teal{border-left:4px solid var(--teal);}
+.notif-img{width:110px;flex-shrink:0;background:#e8e0d0;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.notif-img img{width:100%;height:100%;object-fit:cover;}
+.notif-card.no-img .notif-img{display:none;}
+.notif-body{flex:1;padding:15px 18px 14px;min-width:0;display:flex;flex-direction:column;gap:7px;}
+.notif-title-row{display:flex;align-items:flex-start;gap:9px;}
+.notif-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.notif-title{font-size:14px;font-weight:800;color:var(--dark);line-height:1.45;}
+.notif-card.c-red .notif-title{color:var(--red);}
+.notif-excerpt-inline{padding-left:18px;font-size:16px;color:#5a4030;line-height:1.75;}
+.notif-read-more{display:inline;font-size:14px;font-weight:700;color:var(--green-dark);white-space:nowrap;cursor:pointer;margin-left:4px;}
+.notif-read-more:hover{text-decoration:underline;}
+.notif-meta{padding-left:18px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:4px;}
+.notif-meta span{font-size:12px;color:#9a8060;}
+.notif-meta-sep{color:#d0c0a0;}
+.notif-like{margin-left:auto;font-size:12px;font-weight:700;color:#9a8060;display:flex;align-items:center;gap:3px;position:relative;cursor:pointer;padding:2px 4px;border-radius:6px;transition:background .12s;}
+.notif-like:hover{background:#f5f0e8;}
+.like-popover{position:absolute;bottom:calc(100% + 6px);right:0;background:#fff;border:1.5px solid var(--gray-border);border-radius:10px;box-shadow:var(--shadow-lg);padding:10px 12px;min-width:190px;z-index:400;display:none;animation:modal-in .15s ease both;}
+.like-popover.open{display:block;}
+.like-popover-title{font-size:10px;font-weight:800;color:#9a8060;text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px;}
+.like-popover-list{display:flex;flex-direction:column;gap:4px;}
+.like-popover-item{font-size:12px;font-weight:600;color:#4a3520;display:flex;align-items:center;gap:5px;}
+.like-popover-item::before{content:'👍';font-size:11px;}
+.like-popover-empty{font-size:12px;color:#bbb;font-style:italic;}
+.edited-badge{font-size:11px;font-weight:700;color:#7a5a00;background:#fff3cd;border:1px solid #e8c84a;border-radius:5px;padding:1px 6px;white-space:nowrap;}
+.create-btn{display:flex;align-items:center;gap:7px;padding:9px 18px;background:#8b4513;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:background .15s;flex-shrink:0;margin-top:4px;}
+.create-btn:hover{background:#a0522d;}
+.create-btn-icon{width:18px;height:18px;background:#c0392b;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;line-height:1;flex-shrink:0;}
+.detail-overlay{position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:600;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(5px);}
+.detail-overlay.open{display:flex;}
+.detail-wrap{position:relative;width:100%;max-width:640px;}
+.detail-modal{background:#fff;border-radius:16px;max-height:88vh;overflow-y:auto;box-shadow:var(--shadow-lg);animation:modal-in .2s ease both;}
+.detail-hero{width:100%;height:220px;object-fit:cover;border-radius:16px 16px 0 0;display:block;}
+.detail-content{padding:24px 28px 32px;}
+.detail-badge-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.detail-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;}
+.detail-ban{font-size:12px;color:#9a8060;font-weight:600;}
+.detail-title{font-size:20px;font-weight:900;color:var(--dark);line-height:1.4;margin-bottom:10px;}
+.detail-meta-row{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid var(--gray-border);}
+.detail-meta-row span{font-size:12px;color:#9a8060;}
+.detail-body{font-size:17px;color:#4a3520;line-height:1.9;}
+.detail-body p{margin-bottom:14px;}
+.detail-body strong{font-weight:800;color:#2c1a0e;}
+.detail-body ul,.detail-body ol{padding-left:22px;margin-bottom:14px;}
+.detail-body li{margin-bottom:6px;}
+.detail-close{position:absolute;top:14px;right:14px;width:36px;height:36px;border:none;background:rgba(255,255,255,.95);border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,.22);z-index:10;color:#555;transition:all .15s;}
+.detail-close:hover{background:#fff;color:#c0392b;transform:scale(1.05);}
+.detail-color-bar{height:4px;border-radius:16px 16px 0 0;}
+.detail-like-section{margin-top:20px;padding-top:16px;border-top:1px solid var(--gray-border);}
+.detail-like-title{font-size:12px;font-weight:800;color:#9a8060;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
+.detail-like-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.detail-like-tag{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#f5f0e8;border:1px solid #e2d9cc;border-radius:20px;font-size:12px;font-weight:600;color:#5a3d1a;}
+.empty-state{padding:32px 20px;text-align:center;color:#aaa;}
+.empty-state .es-icon{font-size:36px;margin-bottom:8px;}
+.empty-state .es-text{font-size:14px;font-weight:600;}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px);}
+.overlay.open{display:flex;}
+.modal{background:#fff;border-radius:14px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg);animation:modal-in .2s ease both;}
+@keyframes modal-in{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:none}}
+.modal-header{padding:14px 18px 12px;border-bottom:1px solid var(--gray-border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:10;}
+.modal-title{font-size:15px;font-weight:800;color:var(--dark);}
+.modal-close{width:30px;height:30px;border:none;background:var(--gray-bg);border-radius:7px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--gray-text);}
+.modal-close:hover{background:#e2d9cc;color:var(--dark);}
+.modal-body{padding:16px 18px;display:flex;flex-direction:column;gap:13px;}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+.form-label{font-size:11px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:.5px;}
+.form-label .req{color:var(--red);margin-left:2px;}
+.form-input,.form-select,.form-textarea{padding:9px 11px;border:1.5px solid var(--gray-border);border-radius:7px;font-size:14px;color:var(--dark);background:var(--gray-bg);outline:none;transition:border-color .15s,background .15s;font-family:var(--font);}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--green-dark);background:#fff;}
+.form-textarea{resize:vertical;min-height:68px;line-height:1.5;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.priority-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.priority-opt{padding:9px;border-radius:8px;border:1.5px solid var(--gray-border);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--gray-text);}
+.priority-opt.selected.p-red{background:var(--red-light);border-color:var(--red);color:var(--red);}
+.priority-opt.selected.p-orange{background:var(--orange-light);border-color:var(--orange);color:var(--orange);}
+.priority-opt.selected.p-yellow{background:var(--yellow-light);border-color:var(--yellow);color:#7c5500;}
+.priority-opt.selected.p-teal{background:var(--teal-light);border-color:var(--teal);color:var(--teal);}
+.pdot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.modal-footer{padding:10px 18px 16px;display:flex;gap:9px;justify-content:flex-end;border-top:1px solid var(--gray-border);}
+.btn-cancel{padding:9px 18px;border-radius:7px;border:1.5px solid var(--gray-border);background:#fff;font-size:14px;font-weight:600;color:var(--gray-text);cursor:pointer;}
+.btn-cancel:hover{background:var(--gray-bg);}
+.btn-save{padding:9px 20px;border-radius:7px;border:none;background:var(--green-dark);color:#fff;font-size:14px;font-weight:700;cursor:pointer;}
+.btn-save:hover{background:var(--green-mid);}
+.upload-zone{border:2px dashed var(--gray-border);border-radius:7px;padding:14px;text-align:center;cursor:pointer;background:var(--gray-bg);}
+.upload-text{font-size:13px;color:var(--gray-text);font-weight:500;}
+.upload-text strong{color:var(--green-dark);}
+.rte-wrapper{border:1.5px solid var(--gray-border);border-radius:9px;overflow:hidden;background:#fff;}
+.rte-wrapper:focus-within{border-color:#aaa;}
+.rte-toolbar{display:flex;align-items:center;gap:3px;padding:7px 10px;background:#f8f6f2;border-bottom:1.5px solid var(--gray-border);flex-wrap:wrap;}
+.rte-select{padding:4px 8px;border:1.5px solid var(--gray-border);border-radius:6px;font-size:12px;font-weight:600;color:var(--dark);background:#fff;cursor:pointer;font-family:var(--font);outline:none;margin-right:4px;}
+.rte-btn{min-width:30px;height:30px;border-radius:6px;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#374151;transition:all .12s;font-family:var(--font);padding:0 5px;}
+.rte-btn:hover{background:#e8e3d8;}
+.rte-btn.rte-active{background:#e2d9cc;color:#3a2200;}
+.rte-sep{width:1px;height:20px;background:#ddd;margin:0 4px;flex-shrink:0;}
+.rte-content{min-height:110px;padding:12px 14px;font-size:16px;line-height:1.7;color:var(--dark);outline:none;}
+.rte-content:empty::before{content:attr(data-placeholder);color:#b0a090;pointer-events:none;font-style:italic;}
+.time-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:8px;}
+.time-group{display:flex;flex-direction:column;gap:4px;}
+.time-group label{font-size:11px;color:var(--gray-text);font-weight:600;}
+.time-selects{display:flex;align-items:center;gap:5px;}
+.time-sel{flex:1;padding:8px 6px;border:1.5px solid var(--gray-border);border-radius:7px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--gray-bg);outline:none;cursor:pointer;text-align:center;}
+.time-sel:focus{border-color:var(--green-dark);background:#fff;}
+.ldp-wrap{position:relative;width:100%;}
+.ldp-input{display:flex;align-items:center;gap:8px;padding:9px 11px;border:1.5px solid var(--gray-border);border-radius:7px;background:var(--gray-bg);cursor:pointer;transition:border-color .15s;user-select:none;}
+.ldp-input:hover,.ldp-input.open{border-color:var(--green-dark);background:#fff;}
+.ldp-icon{width:16px;height:16px;color:var(--green-dark);flex-shrink:0;}
+.ldp-text{flex:1;font-size:13px;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ldp-text.ph{color:#9ca3af;}
+.ldp-clear{display:flex;align-items:center;justify-content:center;width:18px;height:18px;border:none;background:transparent;color:#aaa;cursor:pointer;border-radius:50%;padding:0;}
+.ldp-clear:hover{color:var(--red);}
+.ldp-cal{position:absolute;top:calc(100% + 5px);left:0;z-index:999;background:#fff;border:1.5px solid var(--gray-border);border-radius:12px;box-shadow:var(--shadow-lg);padding:12px 10px 0;width:280px;animation:modal-in .15s ease both;}
+.ldp-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.ldp-title{font-size:13px;font-weight:800;color:var(--green-dark);}
+.ldp-nav{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border:1px solid var(--gray-border);border-radius:6px;background:transparent;cursor:pointer;color:var(--green-dark);font-size:13px;font-weight:700;}
+.ldp-nav:hover{background:var(--green-pale);}
+.ldp-wds{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:3px;}
+.ldp-wds span{text-align:center;font-size:9px;font-weight:800;color:var(--gray-text);padding:3px 0;}
+.ldp-wds .wd-sun{color:var(--red);}
+.ldp-days{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;}
+.ldp-day{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3px 1px;border-radius:6px;cursor:pointer;min-height:36px;transition:background .1s;}
+.ldp-day:hover:not(.ldp-other){background:var(--green-pale);}
+.ldp-day.ldp-other{opacity:.25;cursor:default;pointer-events:none;}
+.ldp-day .d-sol{font-size:12px;font-weight:700;color:var(--dark);}
+.ldp-day .d-lun{font-size:8px;color:var(--gray-text);}
+.ldp-day.ldp-today:not(.ldp-sel) .d-sol{color:#f97316;font-weight:800;}
+.ldp-day.ldp-sel{background:var(--green-dark)!important;border-radius:6px;}
+.ldp-day.ldp-sel .d-sol,.ldp-day.ldp-sel .d-lun{color:#fff!important;}
+.ldp-day.ldp-sun:not(.ldp-sel) .d-sol{color:var(--red);}
+.ldp-day.ldp-sat:not(.ldp-sel) .d-sol{color:var(--green-dark);}
+.ldp-foot{margin-top:8px;padding:7px 2px 9px;border-top:1px solid var(--gray-border);}
+.ldp-foot-row{display:flex;align-items:baseline;gap:6px;margin-bottom:3px;}
+.ldp-foot-lbl{font-size:9px;font-weight:700;color:var(--gray-text);min-width:60px;}
+.ldp-foot-val{font-size:11px;font-weight:600;color:var(--dark);}
+.ldp-foot-val.lunar{color:var(--green-dark);}
+@media(max-width:600px){
+  .page-wrap{padding:16px 12px 40px;}
+  .page-title{font-size:20px;}
+  .notif-img{width:80px;}
+  .notif-excerpt-inline{font-size:15px;}
+  .detail-body{font-size:16px;}
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-title-block">
+    <div class="page-title-text">
+      <div class="page-title">📢 THÔNG BÁO TOÀN CHÙA</div>
+      <div class="page-lunar" id="pageLunar"></div>
+    </div>
+    <button class="create-btn" onclick="openModal()">
+      <span class="create-btn-icon">+</span> Tạo thông báo
+    </button>
+  </div>
+  <div class="top-bar">
+    <span class="filter-label">Trạng thái</span>
+    <button class="filter-btn fb-all active" onclick="setFilter('all',this)">Tất cả</button>
+    <button class="filter-btn fb-red" onclick="setFilter('red',this)"><div class="fdot" style="background:#c0392b"></div>Khẩn cấp</button>
+    <button class="filter-btn fb-orange" onclick="setFilter('orange',this)"><div class="fdot" style="background:#e8720a"></div>Quan trọng</button>
+    <button class="filter-btn fb-teal" onclick="setFilter('teal',this)"><div class="fdot" style="background:#00796b"></div>Bình thường</button>
+    <div class="bar-sep"></div>
+    <div class="search-inline">
+      <span style="font-size:13px;color:#bbb;">🔍</span>
+      <input type="text" placeholder="Tìm thông báo..." oninput="filterSearch(this.value)">
+    </div>
+  </div>
+  <div id="feed"></div>
+</div>
+
+<div class="detail-overlay" id="detailOverlay" onclick="handleDetailOverlayClick(event)">
+  <div class="detail-wrap">
+    <button class="detail-close" onclick="closeDetail()">✕</button>
+    <div class="detail-modal" id="detailModal"></div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <div class="modal-title">➕ Tạo Thông Báo Mới</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Mức Độ Ưu Tiên <span class="req">*</span></label>
+        <div class="priority-row">
+          <div class="priority-opt p-red selected" onclick="selectPriority(this)"><div class="pdot" style="background:#c0392b"></div>Khẩn Cấp</div>
+          <div class="priority-opt p-orange" onclick="selectPriority(this)"><div class="pdot" style="background:#e8720a"></div>Quan Trọng</div>
+          <div class="priority-opt p-yellow" onclick="selectPriority(this)"><div class="pdot" style="background:#c9950a"></div>Tin Tức</div>
+          <div class="priority-opt p-teal" onclick="selectPriority(this)"><div class="pdot" style="background:#00796b"></div>Bình Thường</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phận Sự Ban <span class="req">*</span></label>
+        <select class="form-select" id="formBan">
+          <option value="">-- Chọn Ban --</option>
+          <option>Ban Tri Sự</option><option>Ban Quản Chúng</option>
+          <option>Ban Văn hóa Truyền thông</option><option>Ban Giáo dục TTN</option>
+          <option>Ban Văn phòng</option><option>Ban Tài chính</option>
+          <option>Ban Nhân sự Tiền lương</option><option>Ban Tiếp tăng độ chúng</option>
+          <option>Ban Chăm sóc người cao tuổi</option><option>Ban Tổ chức sự kiện</option>
+          <option>Ban An sinh</option><option>Ban Hỗ trợ CVT</option>
+          <option>Ban Hướng dẫn Phật tử</option><option>Ban Hương Đăng</option>
+          <option>Ban Nghi Lễ</option><option>Ban Môi trường</option>
+          <option>Ban May</option><option>Ban Y tế</option>
+          <option>Ban Đời sống</option><option>Ban Quốc tế</option>
+          <option>Ban Hành hương</option><option>Ban Quản lý dự án</option>
+          <option>Ban Vật tư</option><option>Ban Cơ giới vận tải</option>
+          <option>Ban Trang trí khánh tiết</option><option>Ban Bảo tàng</option>
+          <option>Ban Thư viện</option><option>Ban Thị giả</option>
+          <option>Ban Tri khố</option><option>Ban An ninh</option>
+          <option>Ban Vườn</option><option>Tất cả các Ban</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tiêu đề <span class="req">*</span></label>
+        <input type="text" class="form-input" id="formTitle" placeholder="Nhập tiêu đề thông báo...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nội Dung Thông Báo <span class="req">*</span></label>
+        <div class="rte-wrapper">
+          <div class="rte-toolbar">
+            <select class="rte-select" onchange="execRTEBlock(this.value);this.value='p'">
+              <option value="p">Đoạn văn</option>
+              <option value="h2">Tiêu đề lớn</option>
+              <option value="h3">Tiêu đề nhỏ</option>
+            </select>
+            <div class="rte-sep"></div>
+            <button class="rte-btn" id="rte-bold" onclick="toggleRTE('bold','rte-bold')"><b>B</b></button>
+            <button class="rte-btn" id="rte-italic" onclick="toggleRTE('italic','rte-italic')"><i style="font-family:serif">I</i></button>
+            <button class="rte-btn" id="rte-underline" onclick="toggleRTE('underline','rte-underline')"><u>U</u></button>
+            <button class="rte-btn" onclick="pickColor()" style="font-weight:900;color:#c0392b;font-size:14px;">A</button>
+            <div class="rte-sep"></div>
+            <button class="rte-btn" onclick="execRTE('insertUnorderedList')">
+              <svg viewBox="0 0 16 16"><circle cx="2" cy="4" r="1.2" fill="currentColor"/><line x1="5" y1="4" x2="14" y2="4" stroke="currentColor" stroke-width="1.5"/><circle cx="2" cy="8" r="1.2" fill="currentColor"/><line x1="5" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.5"/><circle cx="2" cy="12" r="1.2" fill="currentColor"/><line x1="5" y1="12" x2="14" y2="12" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+            <button class="rte-btn" onclick="execRTE('insertOrderedList')">
+              <svg viewBox="0 0 16 16"><text x="1" y="5" font-size="4.5" fill="currentColor" font-family="monospace">1.</text><line x1="6" y1="4" x2="14" y2="4" stroke="currentColor" stroke-width="1.5"/><text x="1" y="9" font-size="4.5" fill="currentColor" font-family="monospace">2.</text><line x1="6" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.5"/><text x="1" y="13" font-size="4.5" fill="currentColor" font-family="monospace">3.</text><line x1="6" y1="12" x2="14" y2="12" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+            <div class="rte-sep"></div>
+            <button class="rte-btn" onclick="insertLink()">
+              <svg viewBox="0 0 16 16"><path d="M6.5 9.5a3.5 3.5 0 005 0l2-2a3.5 3.5 0 00-5-5L7.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M9.5 6.5a3.5 3.5 0 00-5 0l-2 2a3.5 3.5 0 005 5L8.5 12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </button>
+            <button class="rte-btn" onclick="insertEmoji()" style="font-size:15px;">😊</button>
+          </div>
+          <div class="rte-content" id="rteContent" contenteditable="true" data-placeholder="Nhập nội dung thông báo toàn chùa..."></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Thời Gian Diễn Ra <span class="req">*</span></label>
+        <div class="form-row">
+          <div>
+            <div style="font-size:11px;color:var(--gray-text);margin-bottom:4px;">Ngày bắt đầu</div>
+            <div class="ldp-wrap" id="ldpWrap1">
+              <div class="ldp-input" id="ldpInput1" onclick="toggleLdp(1)">
+                <svg class="ldp-icon" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 2v4M13 2v4M3 9h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <span class="ldp-text ph" id="ldpText1">Chọn ngày...</span>
+                <button class="ldp-clear" id="ldpClear1" style="display:none" onclick="clearLdp(event,1)">✕</button>
+              </div>
+              <div class="ldp-cal" id="ldpCal1" style="display:none"></div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--gray-text);margin-bottom:4px;">Ngày kết thúc</div>
+            <div class="ldp-wrap" id="ldpWrap2">
+              <div class="ldp-input" id="ldpInput2" onclick="toggleLdp(2)">
+                <svg class="ldp-icon" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 2v4M13 2v4M3 9h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <span class="ldp-text ph" id="ldpText2">Chọn ngày...</span>
+                <button class="ldp-clear" id="ldpClear2" style="display:none" onclick="clearLdp(event,2)">✕</button>
+              </div>
+              <div class="ldp-cal" id="ldpCal2" style="display:none"></div>
+            </div>
+          </div>
+        </div>
+        <div class="time-row">
+          <div class="time-group">
+            <label>Giờ bắt đầu</label>
+            <div class="time-selects">
+              <select class="time-sel" id="timeStartH"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select>
+              <select class="time-sel" id="timeStartM"><option value="00">00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option></select>
+              <select class="time-sel" id="timeStartAP"><option value="AM">AM</option><option value="PM">PM</option></select>
+            </div>
+          </div>
+          <div class="time-group">
+            <label>Giờ kết thúc</label>
+            <div class="time-selects">
+              <select class="time-sel" id="timeEndH"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select>
+              <select class="time-sel" id="timeEndM"><option value="00">00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option></select>
+              <select class="time-sel" id="timeEndAP"><option value="AM">AM</option><option value="PM" selected>PM</option></select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Hình Ảnh (nếu có)</label>
+        <div class="upload-zone" onclick="document.getElementById('imgUp').click()">
+          <div style="font-size:20px;margin-bottom:5px;">🖼️</div>
+          <div class="upload-text"><strong>Nhấn để chọn ảnh</strong> hoặc kéo thả vào đây</div>
+          <div class="upload-text" style="font-size:11px;margin-top:2px;opacity:.7;">PNG, JPG · Tối đa 5MB</div>
+          <input type="file" id="imgUp" style="display:none" accept="image/*">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Huỷ</button>
+      <button class="btn-save" onclick="saveNotif()">💾 Lưu Thông Báo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const LDP_CAN=['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý'];
+const LDP_CHI=['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+const LDP_MONTHS=['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
+function ldpJdFromDate(d,m,y){const a=Math.floor((14-m)/12);const yy=y+4800-a;const mm=m+12*a-3;let jd=d+Math.floor((153*mm+2)/5)+365*yy+Math.floor(yy/4)-Math.floor(yy/100)+Math.floor(yy/400)-32045;if(jd<2299161)jd=d+Math.floor((153*mm+2)/5)+365*yy+Math.floor(yy/4)-32083;return jd;}
+function ldpGetNewMoonDay(k,tz){const T=k/1236.85,T2=T*T,T3=T2*T,dr=Math.PI/180;let Jd1=2415020.75933+29.53058868*k+0.0001178*T2-0.000000155*T3;Jd1+=0.00033*Math.sin((166.56+132.87*T-0.009173*T2)*dr);const M=359.2242+29.10535608*k-0.0000333*T2-0.00000347*T3,Mpr=306.0253+385.81691806*k+0.0107306*T2+0.00001236*T3,F=21.2964+390.67050646*k-0.0016528*T2-0.00000239*T3;let C1=(0.1734-0.000393*T)*Math.sin(M*dr)+0.0021*Math.sin(2*dr*M);C1-=0.4068*Math.sin(Mpr*dr)+0.0161*Math.sin(2*dr*Mpr)-0.0004*Math.sin(3*dr*Mpr)+0.0104*Math.sin(2*dr*F)-0.0051*Math.sin((M+Mpr)*dr)-0.0074*Math.sin((M-Mpr)*dr)+0.0004*Math.sin((2*F+M)*dr)-0.0004*Math.sin((2*F-M)*dr)-0.0006*Math.sin((2*F+Mpr)*dr)+0.001*Math.sin((2*F-Mpr)*dr)+0.0005*Math.sin((M+2*Mpr)*dr);let dt=T<-11?0.001+0.000839*T+0.0002261*T2-0.00000845*T3-0.000000081*T*T3:-0.000278+0.000265*T+0.000262*T2;return Math.floor(Jd1+C1-dt+0.5+tz/24);}
+function ldpGetSunLong(jdn,tz){const T=(jdn-2451545.5-tz/24)/36525,T2=T*T,dr=Math.PI/180,M=357.5291+35999.0503*T-0.0001559*T2-0.00000048*T*T2,L0=280.46645+36000.76983*T+0.0003032*T2;let DL=(1.9146-0.004817*T-0.000014*T2)*Math.sin(dr*M)+(0.019993-0.000101*T)*Math.sin(dr*2*M)+0.00029*Math.sin(dr*3*M);let L=(L0+DL)*dr;L-=2*Math.PI*Math.floor(L/(2*Math.PI));return Math.floor(L/Math.PI*6);}
+function ldpGetLunarMonth11(y,tz){const off=ldpJdFromDate(31,12,y)-2415021,k=Math.floor(off/29.530588853);let nm=ldpGetNewMoonDay(k,tz);if(ldpGetSunLong(nm,tz)>=9)nm=ldpGetNewMoonDay(k-1,tz);return nm;}
+function ldpGetLeapOffset(a11,tz){const k=Math.floor((a11-2415021.076998695)/29.530588853+0.5);let last=0,i=1,arc=ldpGetSunLong(ldpGetNewMoonDay(k+i,tz),tz);do{last=arc;i++;arc=ldpGetSunLong(ldpGetNewMoonDay(k+i,tz),tz);}while(arc!==last&&i<14);return i-1;}
+function ldpSolar2Lunar(d,m,y){const tz=7,jd=ldpJdFromDate(d,m,y),k=Math.floor((jd-2415021.076998695)/29.530588853);let ms=ldpGetNewMoonDay(k+1,tz);if(ms>jd)ms=ldpGetNewMoonDay(k,tz);let a11=ldpGetLunarMonth11(y,tz),b11=a11,ly;if(a11>=ms){ly=y;a11=ldpGetLunarMonth11(y-1,tz);}else{ly=y+1;b11=ldpGetLunarMonth11(y+1,tz);}const lday=jd-ms+1,diff=Math.floor((ms-a11)/29);let leap=0,lmonth=diff+11;if(b11-a11>365){const lo=ldpGetLeapOffset(a11,tz);if(diff>=lo){lmonth=diff+10;if(diff===lo)leap=1;}}if(lmonth>12)lmonth-=12;if(lmonth>=11&&diff<4)ly--;return{day:lday,month:lmonth,year:ly,isLeap:leap===1,canChiYear:LDP_CAN[(ly+6)%10]+' '+LDP_CHI[(ly+8)%12]};}
+function ldpPad(n){return String(n).padStart(2,'0');}
+function ldpFmtSolar(d){return `${ldpPad(d.getDate())}/${ldpPad(d.getMonth()+1)}/${d.getFullYear()}`;}
+
+(function(){
+  const now=new Date();
+  const lun=ldpSolar2Lunar(now.getDate(),now.getMonth()+1,now.getFullYear());
+  const days=['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
+  document.getElementById('pageLunar').textContent=`${days[now.getDay()]} · Ngày ${lun.day} tháng ${lun.month}${lun.isLeap?' (nhuận)':''} năm ${lun.canChiYear}`;
+})();
+
+// ── LIKE BANKS LIST — đã đổi CTV → CVT ──────
+const ALL_BANKS=[
+  'Ban Tri Sự','Ban Văn Hóa TT','Ban An Sinh','Ban Quản Chúng',
+  'Ban An Ninh','Ban Cung Ứng Vật Tư','Ban Hỗ Trợ CVT',
+  'Ban Hương Đăng','Ban Môi Trường'
+];
+
+function randomLikedBy(){const shuffled=[...ALL_BANKS].sort(()=>Math.random()-.5);const count=1+Math.floor(Math.random()*5);return shuffled.slice(0,count);}
+
+const notifData=[
+  {id:1,color:'red',ban:'Ban Tri Sự',title:'BÁO CÁO QUÝ I CHƯA NỘP – HẠN CHÓT 08H00 NGÀY 22/3 ÂM LỊCH',excerpt:'Ban Tri Sự kính thông báo đến nay vẫn còn một số ban chưa hoàn thành nộp báo cáo tổng kết hoạt động Quý I năm 2026. Đây là công việc bắt buộc theo quy chế nội bộ đã thống nhất từ đầu năm.',fullContent:`<p>Kính thưa Quý Ban và toàn thể đại chúng,</p><p>Ban Tri Sự kính thông báo đến nay vẫn còn một số ban <strong>chưa hoàn thành nộp báo cáo</strong> tổng kết hoạt động Quý I năm 2026. Đây là công việc bắt buộc theo quy chế hoạt động nội bộ đã được thống nhất từ đầu năm.</p><p>Danh sách các ban chưa nộp báo cáo tính đến 07h00 hôm nay:</p><ul><li>Ban Hương Đăng</li><li>Ban Nghi Lễ</li><li>Ban Bảo tàng</li><li>Ban Thị giả</li><li>Ban Vườn</li></ul><p><strong>⏰ Hạn chót nộp báo cáo: 08h00 ngày 08/05/2026.</strong></p><p>Các ban trên vui lòng hoàn thành và nộp báo cáo đúng hạn. Sau thời điểm trên, Ban Tri Sự sẽ ghi nhận vào biên bản họp định kỳ và báo cáo lên Ban Quản Chúng.</p><p>Trân trọng kính báo.</p>`,time:'21/3 Âm Lịch · 07:00',lunar:'21/3 Âm Lịch · 07:00',likedBy:randomLikedBy(),img:'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=300&q=80',edited:true},
+  {id:2,color:'red',ban:'Ban An ninh',title:'KIỂM TRA AN NINH TOÀN KHU – 06H00 NGÀY 23/3 ÂM LỊCH',excerpt:'Ban An ninh thông báo sẽ tổ chức kiểm tra an ninh toàn khu vào sáng sớm ngày 09/05. Tất cả các ban cần phối hợp kiểm tra và báo cáo tình trạng khu vực phụ trách trước thời điểm kiểm tra.',fullContent:`<p>Ban An ninh trân trọng thông báo,</p><p>Vào lúc <strong>06h00 ngày 09/05/2026</strong>, Ban An ninh sẽ tiến hành kiểm tra an ninh định kỳ toàn bộ khuôn viên chùa theo kế hoạch đã được phê duyệt.</p><p>Các ban phụ trách khu vực cần thực hiện đầy đủ các bước sau:</p><ul><li>Kiểm tra và khóa cửa toàn bộ phòng ốc trước <strong>22h00 ngày 08/05</strong></li><li>Bố trí ít nhất một người trực vào buổi sáng 09/05</li><li>Báo cáo tình trạng khu vực về Ban An ninh trước 07h00</li><li>Kiểm tra hệ thống camera và đèn chiếu sáng khuôn viên</li></ul><p>Mọi sự cố hoặc bất thường cần báo ngay về đường dây trực ban an ninh.</p>`,time:'20/3 Âm Lịch · 14:30',lunar:'20/3 Âm Lịch · 14:30',likedBy:randomLikedBy(),img:null},
+  {id:3,color:'orange',ban:'Ban Tổ chức sự kiện',title:'HỌP CHUẨN BỊ LỄ PHẬT ĐẢN 2026 – 14H00 NGÀY 25/3 ÂM LỊCH',excerpt:'Mời tất cả trưởng ban tham dự buổi họp chuẩn bị Lễ Phật Đản 2026 vào lúc 14h00 ngày 11/05 tại Chánh Điện. Nội dung: phân công nhiệm vụ, kế hoạch trang trí và lịch trình sự kiện toàn ngày.',fullContent:`<p>Kính mời toàn thể Trưởng Ban tham dự buổi họp chuẩn bị <strong>Lễ Phật Đản 2026</strong>.</p><p><strong>Thời gian:</strong> 14h00 ngày 11/05/2026<br><strong>Địa điểm:</strong> Chánh Điện – Tầng 1</p><ul><li>Phân công nhiệm vụ chi tiết cho từng ban</li><li>Thống nhất kế hoạch trang trí khuôn viên</li><li>Duyệt lịch trình sự kiện toàn ngày Phật Đản</li><li>Phân bổ ngân sách và vật tư</li></ul><p>Đề nghị các Trưởng Ban sắp xếp tham dự đầy đủ và đúng giờ.</p>`,time:'21/3 Âm Lịch · 09:15',lunar:'21/3 Âm Lịch · 09:15',likedBy:randomLikedBy(),img:'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=300&q=80'},
+  {id:4,color:'orange',ban:'Ban Tài chính',title:'QUYẾT TOÁN THÁNG 4/2026 – NỘP TRƯỚC 15H00 NGÀY 24/3 ÂM LỊCH',excerpt:'Ban Tài chính nhắc nhở tất cả các ban hoàn thành hồ sơ quyết toán tháng 4/2026. Chứng từ hợp lệ nộp về văn phòng tài chính trước 15h00 ngày 10/05/2026.',fullContent:`<p>Kính gửi các Ban,</p><p>Ban Tài chính nhắc nhở toàn thể các ban hoàn thành <strong>hồ sơ quyết toán tháng 4/2026</strong> theo đúng quy trình và thời hạn quy định.</p><p><strong>⏰ Hạn nộp: trước 15h00 ngày 10/05/2026.</strong></p><p>Các ban nộp trễ sẽ được ghi nhận trong biên bản họp và ảnh hưởng đến đánh giá hoạt động định kỳ.</p>`,time:'21/3 Âm Lịch · 06:45',lunar:'21/3 Âm Lịch · 06:45',likedBy:randomLikedBy(),img:null},
+  {id:7,color:'teal',ban:'Ban Môi trường',title:'LỊCH TỔNG VỆ SINH KHUÔN VIÊN THÁNG 4 ÂM LỊCH',excerpt:'Ban Môi trường thông báo lịch tổng vệ sinh định kỳ tháng 5. Toàn thể đại chúng và các ban phụ trách khu vực vui lòng phối hợp dọn dẹp, chăm sóc cây xanh và xử lý rác thải đúng nơi quy định.',fullContent:`<p>Ban Môi trường kính thông báo <strong>lịch tổng vệ sinh khuôn viên tháng 5/2026</strong>:</p><ul><li><strong>Ngày 10/05:</strong> Vệ sinh chánh điện, hành lang và sân trước</li><li><strong>Ngày 17/05:</strong> Dọn dẹp khu vực nhà bếp, phòng ăn và kho vật tư</li><li><strong>Ngày 24/05:</strong> Cắt tỉa cây xanh, phát quang bụi rậm toàn khu</li></ul><p>Thời gian bắt đầu mỗi buổi: <strong>6h30 sáng</strong>.</p>`,time:'20/3 Âm Lịch · 08:00',lunar:'20/3 Âm Lịch · 08:00',likedBy:randomLikedBy(),img:'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=300&q=80'},
+];
+
+const colorMap={red:{cls:'c-red',dot:'#c0392b',label:'Khẩn Cấp',badgeBg:'#fdecea',badgeColor:'#c0392b'},orange:{cls:'c-orange',dot:'#e8720a',label:'Quan Trọng',badgeBg:'#fff0e4',badgeColor:'#e8720a'},yellow:{cls:'c-yellow',dot:'#c9950a',label:'Tin Tức',badgeBg:'#fffbdf',badgeColor:'#b07d00'},teal:{cls:'c-teal',dot:'#00796b',label:'Bình Thường',badgeBg:'#e0f2f1',badgeColor:'#00796b'}};
+const sections=[{key:'red',name:'Khẩn Cấp'},{key:'orange',name:'Quan Trọng'},{key:'teal',name:'Bình Thường'}];
+
+function truncateText(text,maxLen){if(text.length<=maxLen)return{short:text,truncated:false};return{short:text.substring(0,maxLen),truncated:true};}
+
+function renderCard(n){const cm=colorMap[n.color];const hasImg=!!n.img;const imgHtml=hasImg?`<div class="notif-img"><img src="${n.img}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`:'';const{short,truncated}=truncateText(n.excerpt,160);const excerptHtml=truncated?`${short}… <span class="notif-read-more" onclick="openDetail(${n.id})">Xem chi tiết →</span>`:`${short} <span class="notif-read-more" onclick="openDetail(${n.id})">Xem chi tiết →</span>`;const likedBy=n.likedBy||[];const likeCount=likedBy.length;const popoverItems=likedBy.map(b=>`<div class="like-popover-item">${b}</div>`).join('');const popoverContent=likeCount>0?`<div class="like-popover-title">Đã thích</div><div class="like-popover-list">${popoverItems}</div>`:`<div class="like-popover-empty">Chưa có lượt thích</div>`;return`<div class="notif-card ${cm.cls}${hasImg?'':' no-img'}">${imgHtml}<div class="notif-body"><div class="notif-title-row"><div class="notif-dot" style="background:${cm.dot}"></div><div class="notif-title">${n.title}</div></div><div class="notif-excerpt-inline">${excerptHtml}</div><div class="notif-meta"><span>📋 ${n.ban}</span><span class="notif-meta-sep">·</span><span>${n.lunar}</span>${n.edited?`<span class="notif-meta-sep">·</span><span class="edited-badge">✏️ Đã chỉnh sửa</span>`:''}<div class="notif-like" onclick="toggleLikePopover(event,'lp-${n.id}')">👍 ${likeCount}<div class="like-popover" id="lp-${n.id}">${popoverContent}</div></div></div></div></div>`;}
+
+function renderFeed(data){const feed=document.getElementById('feed');let html='';sections.forEach(sec=>{const items=data.filter(n=>n.color===sec.key);if(currentFilter!=='all'&&currentFilter!==sec.key)return;const cm=colorMap[sec.key];html+=`<div class="section-block" data-section="${sec.key}"><div class="section-head"><div class="section-dot" style="background:${cm.dot}"></div><div class="section-name" style="color:${cm.dot}">${sec.name}</div><div class="section-count">${items.length?`(${items.length})`:''}</div><div class="section-line"></div></div>`;if(!items.length){html+=`<div class="empty-state"><div class="es-icon">📭</div><div class="es-text">Không có thông báo</div></div>`;}else{items.forEach(n=>{html+=renderCard(n);});}html+=`</div>`;});feed.innerHTML=html;}
+
+function toggleLikePopover(e,popId){e.stopPropagation();const pop=document.getElementById(popId);if(!pop)return;const isOpen=pop.classList.contains('open');document.querySelectorAll('.like-popover.open').forEach(p=>p.classList.remove('open'));if(!isOpen)pop.classList.add('open');}
+document.addEventListener('click',()=>{document.querySelectorAll('.like-popover.open').forEach(p=>p.classList.remove('open'));});
+
+let currentFilter='all';let currentSearch='';
+function applyFilters(){let data=notifData;if(currentSearch){const q=currentSearch;data=data.filter(n=>n.title.toLowerCase().includes(q)||n.excerpt.toLowerCase().includes(q)||n.ban.toLowerCase().includes(q));}renderFeed(data);}
+function setFilter(color,btn){currentFilter=color;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');applyFilters();}
+function filterSearch(val){currentSearch=val.toLowerCase();applyFilters();}
+applyFilters();
+
+function openDetail(id){const n=notifData.find(x=>x.id===id);if(!n)return;const cm=colorMap[n.color];let html=`<div class="detail-color-bar" style="background:${cm.dot}"></div>`;if(n.img)html+=`<img class="detail-hero" src="${n.img}" alt="">`;const likedBy=n.likedBy||[];const likeTagsHtml=likedBy.length>0?likedBy.map(b=>`<span class="detail-like-tag">👍 ${b}</span>`).join(''):`<span style="font-size:13px;color:#bbb;font-style:italic">Chưa có lượt thích</span>`;html+=`<div class="detail-content"><div class="detail-badge-row"><span class="detail-badge" style="background:${cm.badgeBg};color:${cm.badgeColor}"><span style="width:7px;height:7px;border-radius:50%;background:${cm.dot};display:inline-block"></span>${cm.label}</span><span class="detail-ban">📋 ${n.ban}</span></div><div class="detail-title">${n.title}</div><div class="detail-meta-row"><span>🕐 ${n.lunar}</span>${n.edited?`<span>·</span><span class="edited-badge">✏️ Đã chỉnh sửa</span>`:''}<span style="margin-left:auto">👍 ${likedBy.length}</span></div><div class="detail-body">${n.fullContent||'<p>'+n.excerpt+'</p>'}</div><div class="detail-like-section"><div class="detail-like-title">👍 Các ban đã thích</div><div class="detail-like-tags">${likeTagsHtml}</div></div></div>`;document.getElementById('detailModal').innerHTML=html;document.getElementById('detailOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeDetail(){document.getElementById('detailOverlay').classList.remove('open');document.body.style.overflow='';}
+function handleDetailOverlayClick(e){if(e.target===document.getElementById('detailOverlay'))closeDetail();}
+
+function openModal(){document.getElementById('overlay').classList.add('open');}
+function closeModal(){document.getElementById('overlay').classList.remove('open');}
+function handleOverlayClick(e){if(e.target===document.getElementById('overlay'))closeModal();}
+
+function saveNotif(){const title=document.getElementById('formTitle').value.trim();const ban=document.getElementById('formBan').value;const content=document.getElementById('rteContent').innerHTML;const selPriority=document.querySelector('.priority-opt.selected');if(!title||!ban||!content){alert('Vui lòng điền đầy đủ thông tin!');return;}const map2={'p-red':'red','p-orange':'orange','p-yellow':'yellow','p-teal':'teal'};const colorClass=[...selPriority.classList].find(c=>c.startsWith('p-'));const color=map2[colorClass]||'teal';const now=new Date();const lun=ldpSolar2Lunar(now.getDate(),now.getMonth()+1,now.getFullYear());notifData.unshift({id:Date.now(),color,ban,title,excerpt:content.replace(/<[^>]+>/g,'').substring(0,160),fullContent:content,time:'Vừa xong',lunar:`${lun.day}/${lun.month} Âm Lịch`,likedBy:[],img:null});applyFilters();closeModal();document.getElementById('formTitle').value='';document.getElementById('rteContent').innerHTML='';document.getElementById('formBan').value='';}
+
+function selectPriority(el){document.querySelectorAll('.priority-opt').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');}
+function execRTE(cmd,val){document.getElementById('rteContent').focus();document.execCommand(cmd,false,val||null);}
+function execRTEBlock(tag){document.getElementById('rteContent').focus();document.execCommand('formatBlock',false,tag);}
+function toggleRTE(cmd,btnId){document.getElementById('rteContent').focus();document.execCommand(cmd,false,null);document.getElementById(btnId).classList.toggle('rte-active',document.queryCommandState(cmd));}
+function pickColor(){const colors=['#c0392b','#e8720a','#1a5c3a','#00796b','#2c1a0e','#7a3a00'];execRTE('foreColor',colors[Math.floor(Math.random()*colors.length)]);}
+function insertLink(){const url=prompt('Nhập URL:','https://');if(url)execRTE('createLink',url);}
+function insertEmoji(){const emojis=['🙏','📢','⚠️','✅','❌','📅','🔔','🌸','⭐','📿','🪔','🏛️'];document.getElementById('rteContent').focus();document.execCommand('insertText',false,emojis[Math.floor(Math.random()*emojis.length)]);}
+
+const ldpState={1:{viewY:new Date().getFullYear(),viewM:new Date().getMonth(),sel:null},2:{viewY:new Date().getFullYear(),viewM:new Date().getMonth(),sel:null}};
+const ldpToday=new Date();
+function ldpBuildCal(idx){const s=ldpState[idx],cal=document.getElementById('ldpCal'+idx),{viewY:y,viewM:m}=s,days=[];const first=new Date(y,m,1);let dow=first.getDay()-1;if(dow<0)dow=6;const prevLast=new Date(y,m,0).getDate();for(let i=dow-1;i>=0;i--)days.push({date:new Date(y,m-1,prevLast-i),other:true});const dim=new Date(y,m+1,0).getDate();for(let d=1;d<=dim;d++)days.push({date:new Date(y,m,d),other:false});const need=Math.ceil(days.length/7)*7;for(let n=1;days.length<need;n++)days.push({date:new Date(y,m+1,n),other:true});let html=`<div class="ldp-hdr"><button class="ldp-nav" onclick="ldpNav(${idx},-1)">‹</button><span class="ldp-title">${LDP_MONTHS[m]} ${y}</span><button class="ldp-nav" onclick="ldpNav(${idx},1)">›</button></div><div class="ldp-wds"><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span class="wd-sun">CN</span></div><div class="ldp-days">`;days.forEach(item=>{const lun=ldpSolar2Lunar(item.date.getDate(),item.date.getMonth()+1,item.date.getFullYear()),isTd=item.date.getFullYear()===ldpToday.getFullYear()&&item.date.getMonth()===ldpToday.getMonth()&&item.date.getDate()===ldpToday.getDate(),isSel=s.sel&&item.date.getFullYear()===s.sel.getFullYear()&&item.date.getMonth()===s.sel.getMonth()&&item.date.getDate()===s.sel.getDate();const cls=['ldp-day',item.other?'ldp-other':'',isTd?'ldp-today':'',isSel?'ldp-sel':'',item.date.getDay()===0?'ldp-sun':'',item.date.getDay()===6?'ldp-sat':''].filter(Boolean).join(' ');const ca=item.other?'':`onclick="ldpSelectDay(${idx},new Date(${item.date.getFullYear()},${item.date.getMonth()},${item.date.getDate()}))"`;html+=`<div class="${cls}" ${ca}><span class="d-sol">${item.date.getDate()}</span><span class="d-lun">${lun.day}/${lun.month}</span></div>`;});html+=`</div>`;if(s.sel){const lun=ldpSolar2Lunar(s.sel.getDate(),s.sel.getMonth()+1,s.sel.getFullYear());html+=`<div class="ldp-foot"><div class="ldp-foot-row"><span class="ldp-foot-lbl">Dương lịch:</span><span class="ldp-foot-val">${ldpFmtSolar(s.sel)}</span></div><div class="ldp-foot-row"><span class="ldp-foot-lbl">Âm lịch:</span><span class="ldp-foot-val lunar">Ngày ${lun.day} tháng ${lun.month}${lun.isLeap?' (nhuận)':''} năm ${lun.canChiYear}</span></div></div>`;}cal.innerHTML=html;}
+function ldpSelectDay(idx,date){const s=ldpState[idx];s.sel=date;const lun=ldpSolar2Lunar(date.getDate(),date.getMonth()+1,date.getFullYear()),lunarStr=`${lun.day}/${lun.month}${lun.isLeap?' (nhuận)':''} ${lun.canChiYear}`,textEl=document.getElementById('ldpText'+idx);textEl.textContent=`${ldpFmtSolar(date)} (${lunarStr})`;textEl.classList.remove('ph');document.getElementById('ldpClear'+idx).style.display='flex';ldpBuildCal(idx);setTimeout(()=>{document.getElementById('ldpCal'+idx).style.display='none';document.getElementById('ldpInput'+idx).classList.remove('open');},120);}
+function ldpNav(idx,dir){const s=ldpState[idx];s.viewM+=dir;if(s.viewM>11){s.viewM=0;s.viewY++;}if(s.viewM<0){s.viewM=11;s.viewY--;}ldpBuildCal(idx);}
+function toggleLdp(idx){const cal=document.getElementById('ldpCal'+idx),inp=document.getElementById('ldpInput'+idx),isOpen=cal.style.display!=='none';[1,2].forEach(i=>{document.getElementById('ldpCal'+i).style.display='none';document.getElementById('ldpInput'+i).classList.remove('open');});if(!isOpen){ldpBuildCal(idx);cal.style.display='block';inp.classList.add('open');}}
+function clearLdp(e,idx){e.stopPropagation();ldpState[idx].sel=null;const textEl=document.getElementById('ldpText'+idx);textEl.textContent='Chọn ngày...';textEl.classList.add('ph');document.getElementById('ldpClear'+idx).style.display='none';ldpBuildCal(idx);}
+document.addEventListener('click',e=>{[1,2].forEach(idx=>{const wrap=document.getElementById('ldpWrap'+idx);if(wrap&&!wrap.contains(e.target)){document.getElementById('ldpCal'+idx).style.display='none';document.getElementById('ldpInput'+idx).classList.remove('open');}});});
+</script>
+</body>
+</html>
