@@ -17,16 +17,17 @@
   --font:'Be Vietnam Pro',sans-serif;
   --shadow-sm:0 1px 4px rgba(0,0,0,.07);--shadow-md:0 4px 16px rgba(0,0,0,.1);--shadow-lg:0 8px 32px rgba(0,0,0,.15);
   --card-bg:#fff;
+  --img-w:280px;
 }
 html,body,input,select,textarea,button{font-family:var(--font);}
 html,body{background:var(--gray-bg);color:var(--dark);min-height:100vh;overflow-x:hidden;font-size:16px;}
 ::-webkit-scrollbar{width:5px;}
 ::-webkit-scrollbar-thumb{background:#d1c8b0;border-radius:3px;}
-.page-wrap{max-width:780px;margin:0 auto;padding:28px 20px 60px;}
+.page-wrap{max-width:1060px;margin:0 auto;padding:28px 20px 60px;}
 .page-title-block{margin-bottom:24px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
 .page-title-text{display:flex;flex-direction:column;align-items:flex-start;}
 .page-title{font-size:26px;font-weight:900;color:#0a1a0a;letter-spacing:-.3px;}
-.page-lunar{font-size:13px;color:#005a50;margin-top:5px;font-weight:700;letter-spacing:.3px;}
+.page-lunar{font-size:15px;color:#005a50;margin-top:5px;font-weight:700;letter-spacing:.3px;}
 .top-bar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:20px;background:#fff;border:1.5px solid var(--gray-border);border-radius:24px;padding:5px 8px 5px 14px;}
 .filter-label{font-size:12px;font-weight:700;color:#9a7a50;white-space:nowrap;margin-right:2px;flex-shrink:0;}
 .filter-btn{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;border:1.5px solid transparent;background:transparent;font-size:12px;font-weight:700;color:var(--gray-text);cursor:pointer;transition:all .12s;white-space:nowrap;}
@@ -36,7 +37,6 @@ html,body{background:var(--gray-bg);color:var(--dark);min-height:100vh;overflow-
 .filter-btn.fb-red.active{background:var(--red-light);color:var(--red);border-color:var(--red);}
 .filter-btn.fb-orange.active{background:var(--orange-light);color:var(--orange);border-color:var(--orange);}
 .filter-btn.fb-green.active{background:var(--green-light);color:var(--green-dark);border-color:var(--green-dark);}
-.filter-btn.fb-teal.active{background:var(--teal-light);color:var(--teal);border-color:var(--teal);}
 .fdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
 .bar-sep{width:1px;height:18px;background:var(--gray-border);flex-shrink:0;margin:0 2px;}
 .search-inline{display:flex;align-items:center;gap:5px;padding:4px 8px;min-width:140px;flex:1;}
@@ -48,58 +48,28 @@ html,body{background:var(--gray-bg);color:var(--dark);min-height:100vh;overflow-
 .section-name{font-size:12px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;}
 .section-count{font-size:11px;font-weight:700;color:#aaa;margin-left:2px;}
 .section-line{flex:1;height:1px;background:var(--gray-border);}
-
-/* ── CARD: horizontal layout ── */
 .notif-card{
-  background:var(--card-bg);
-  border-radius:11px;
-  border:1.5px solid var(--gray-border);
-  overflow:hidden;
-  transition:box-shadow .15s,transform .15s;
-  margin-bottom:10px;
-  display:flex;
-  flex-direction:row;
-  align-items:flex-start;
+  background:var(--card-bg);border-radius:11px;border:1.5px solid var(--gray-border);
+  overflow:hidden;transition:box-shadow .15s,transform .15s;margin-bottom:10px;
+  display:flex;flex-direction:row;align-items:stretch;
 }
 .notif-card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px);}
-.notif-card.c-red{border-left:4px solid var(--red);}
+.notif-card.c-red   {border-left:4px solid var(--red);}
 .notif-card.c-orange{border-left:4px solid var(--orange);}
-.notif-card.c-green{border-left:4px solid var(--green-dark);}
+.notif-card.c-green {border-left:4px solid var(--green-dark);}
 .notif-card.c-yellow{border-left:4px solid var(--yellow);}
-.filter-btn.fb-yellow.active{background:var(--yellow-light);color:var(--yellow);border-color:var(--yellow);}
-
-/* ── IMAGE: 16:9, card height follows image ── */
-.notif-img{
-  flex-shrink:0;
-  width:220px;
-  aspect-ratio:16/9;
-  position:relative;
-  overflow:hidden;
-  background:#e8e0d0;
-  /* align-self:stretch removed — card height follows image */
-}
-.notif-img img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  display:block;
-}
+.notif-img{flex-shrink:0;width:var(--img-w);position:relative;overflow:hidden;background:#e8e0d0;min-height:calc(var(--img-w) * 9 / 16);}
+.notif-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
 .notif-card.no-img .notif-img{display:none;}
-
-.notif-body{flex:1;padding:14px 16px 13px;min-width:0;display:flex;flex-direction:column;gap:6px;}
+.notif-body{flex:1;padding:16px 18px 16px;min-width:0;display:flex;flex-direction:column;gap:8px;}
 .notif-title-row{display:flex;align-items:flex-start;gap:8px;}
 .notif-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
 .notif-title{font-size:14px;font-weight:800;color:var(--dark);line-height:1.45;}
 .notif-card.c-red .notif-title{color:var(--red);}
-.notif-excerpt-inline{padding-left:16px;font-size:13.5px;color:#3a2010;line-height:1.65;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.notif-excerpt-wrapper{padding-left:16px;font-size:13.5px;color:#3a2010;line-height:1.65;}
+.notif-excerpt-wrapper{padding-left:16px;font-size:16px;color:#3a2010;line-height:1.65;flex:1;}
 .notif-read-more{display:inline;font-size:13px;font-weight:700;color:var(--green-dark);white-space:nowrap;cursor:pointer;margin-left:4px;}
 .notif-read-more:hover{text-decoration:underline;}
-.notif-meta{padding-left:16px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:6px;}
+.notif-meta{padding-left:16px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding-top:10px;border-top:1px solid #f0e8dc;margin-top:auto;}
 .notif-meta span{font-size:11.5px;color:#5a4030;}
 .notif-meta-sep{color:#d0c0a0;}
 .notif-like{margin-left:auto;font-size:12px;font-weight:700;color:#5a4030;display:flex;align-items:center;gap:3px;position:relative;cursor:pointer;padding:2px 4px;border-radius:6px;transition:background .12s;}
@@ -112,36 +82,35 @@ html,body{background:var(--gray-bg);color:var(--dark);min-height:100vh;overflow-
 .like-popover-item::before{content:'👍';font-size:11px;}
 .like-popover-empty{font-size:12px;color:#bbb;font-style:italic;}
 .edited-badge{font-size:11px;font-weight:700;color:#7a5a00;background:#fff3cd;border:1px solid #e8c84a;border-radius:5px;padding:1px 6px;white-space:nowrap;}
+.confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:700;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
+.confirm-overlay.open{display:flex;}
+.confirm-box{background:#fff;border-radius:14px;padding:28px 28px 22px;max-width:360px;width:100%;box-shadow:var(--shadow-lg);animation:modal-in .18s ease both;text-align:center;}
+.confirm-icon{font-size:32px;margin-bottom:10px;}
+.confirm-title{font-size:16px;font-weight:800;color:var(--dark);margin-bottom:8px;}
+.confirm-msg{font-size:14px;color:#6a5040;line-height:1.55;margin-bottom:22px;}
+.confirm-btns{display:flex;gap:10px;justify-content:center;}
+.confirm-yes{padding:9px 28px;border-radius:8px;border:none;background:var(--red);color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:background .12s;font-family:var(--font);}
+.confirm-yes:hover{background:#a93226;}
+.confirm-no{padding:9px 22px;border-radius:8px;border:1.5px solid var(--gray-border);background:#fff;color:var(--gray-text);font-size:14px;font-weight:600;cursor:pointer;transition:background .12s;font-family:var(--font);}
+.confirm-no:hover{background:var(--gray-bg);}
+.edit-btn{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;border:none;background:transparent;cursor:pointer;color:#9a8060;font-size:13px;transition:all .12s;flex-shrink:0;position:relative;}
+.edit-btn:hover{background:#f5ead8;color:#5a3010;}
+.edit-popup{position:absolute;bottom:calc(100% + 6px);right:0;background:#fff;border:1.5px solid var(--gray-border);border-radius:10px;box-shadow:var(--shadow-lg);padding:6px;min-width:160px;z-index:450;display:none;animation:modal-in .15s ease both;}
+.edit-popup.open{display:block;}
+.edit-popup-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:13px;font-weight:600;color:#2c1a0e;transition:background .1s;}
+.edit-popup-item:hover{background:#f5f0e8;}
+.edit-popup-item.danger{color:var(--red);}
+.edit-popup-item.danger:hover{background:var(--red-light);}
+.edit-popup-sep{height:1px;background:var(--gray-border);margin:3px 0;}
 .create-btn{display:flex;align-items:center;gap:7px;padding:9px 20px;background:#fff3cd;color:#7a5a00;border:1.5px solid #e8c84a;border-radius:24px;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;flex-shrink:0;margin-top:4px;}
 .create-btn:hover{background:#ffeea0;border-color:#c9950a;}
 .create-btn-icon{width:18px;height:18px;background:#e8c84a;color:#7a5a00;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;line-height:1;flex-shrink:0;}
-
-/* ── Layout mới: tiêu đề trên, ảnh trái + text phải ── */
-.notif-card.has-img-new{flex-direction:column;}
-.notif-title-top{display:flex;align-items:flex-start;gap:8px;padding:14px 16px 10px;}
-.notif-bottom-row{display:flex;flex-direction:row;align-items:flex-start;gap:0;}
-.notif-card.has-img-new .notif-img{
-  flex-shrink:0;
-  width:200px;
-  aspect-ratio:16/9;
-  position:relative;
-  overflow:hidden;
-  background:#e8e0d0;
-}
-.notif-card.has-img-new .notif-img img{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
-}
-.notif-side{flex:1;padding:0 16px 13px;display:flex;flex-direction:column;gap:6px;min-width:0;}
-.notif-side .notif-meta{padding-left:0;margin-top:auto;padding-top:8px;}
-.notif-side .notif-excerpt-wrapper{padding-left:0;}
-
-@media(max-width:500px){
+@media(max-width:600px){
+  :root{--img-w:100%;}
   .notif-card{flex-direction:column;}
-  .notif-img{width:100%;aspect-ratio:16/9;}
-  .notif-bottom-row{flex-direction:column;}
-  .notif-card.has-img-new .notif-img{width:100%;}
+  .notif-img{width:100%;aspect-ratio:16/9;min-height:unset;}
+  .notif-img img{position:static;width:100%;height:auto;}
 }
-
 .detail-overlay{position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:600;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(5px);}
 .detail-overlay.open{display:flex;}
 .detail-wrap{position:relative;width:100%;max-width:640px;}
@@ -277,8 +246,6 @@ html,body{background:var(--gray-bg);color:var(--dark);min-height:100vh;overflow-
     <button class="filter-btn fb-orange" onclick="setFilter('orange',this)"><div class="fdot" style="background:#e8720a"></div>Quan trọng</button>
     <button class="filter-btn fb-green" onclick="setFilter('green',this)"><div class="fdot" style="background:#1a5c3a"></div>Bình thường</button>
     <div class="bar-sep"></div>
-    <button class="filter-btn fb-yellow" onclick="setFilter('yellow',this)"><div class="fdot" style="background:#c9950a"></div>Tin tức</button>
-    <div class="bar-sep"></div>
     <div class="search-inline">
       <span style="font-size:13px;color:#bbb;">🔍</span>
       <input type="text" placeholder="Tìm thông báo..." oninput="filterSearch(this.value)">
@@ -291,6 +258,7 @@ html,body{background:var(--gray-bg);color:var(--dark);min-height:100vh;overflow-
   </div>
 </div>
 
+<!-- Detail overlay -->
 <div class="detail-overlay" id="detailOverlay" onclick="handleDetailOverlayClick(event)">
   <div class="detail-wrap">
     <button class="detail-close" onclick="closeDetail()">✕</button>
@@ -298,6 +266,7 @@ html,body{background:var(--gray-bg);color:var(--dark);min-height:100vh;overflow-
   </div>
 </div>
 
+<!-- Create modal -->
 <div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
   <div class="modal" id="modalBox">
     <div class="modal-header">
@@ -317,10 +286,8 @@ html,body{background:var(--gray-bg);color:var(--dark);min-height:100vh;overflow-
         <label class="form-label">Phận Sự Ban <span class="req">*</span></label>
         <select class="form-select" id="formBan">
           <option value="">-- Chọn Ban --</option>
-          <option>Ban Lãnh Đạo</option>
-          <option>Sư Phụ</option>
-          <option>Ban Quản Chúng</option>
-          <option>Ban Tri Sự</option>
+          <option>Ban Lãnh Đạo</option><option>Sư Phụ</option>
+          <option>Ban Quản Chúng</option><option>Ban Tri Sự</option>
         </select>
       </div>
       <div class="form-group">
@@ -419,7 +386,21 @@ html,body{background:var(--gray-bg);color:var(--dark);min-height:100vh;overflow-
   </div>
 </div>
 
+<!-- Confirm delete modal -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <div class="confirm-icon">🗑️</div>
+    <div class="confirm-title">Xóa thông báo</div>
+    <div class="confirm-msg">Bạn có chắc chắn muốn xóa thông báo này không? Hành động này không thể hoàn tác.</div>
+    <div class="confirm-btns">
+      <button class="confirm-no" onclick="closeConfirm()">Không</button>
+      <button class="confirm-yes" onclick="confirmDeleteYes()">Có, xóa</button>
+    </div>
+  </div>
+</div>
+
 <script>
+/* ── Lunar calendar helpers ── */
 const LDP_CAN=['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý'];
 const LDP_CHI=['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
 const LDP_MONTHS=['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
@@ -432,6 +413,7 @@ function ldpSolar2Lunar(d,m,y){const tz=7,jd=ldpJdFromDate(d,m,y),k=Math.floor((
 function ldpPad(n){return String(n).padStart(2,'0');}
 function ldpFmtSolar(d){return `${ldpPad(d.getDate())}/${ldpPad(d.getMonth()+1)}/${d.getFullYear()}`;}
 
+/* ── Page header lunar date ── */
 (function(){
   const now=new Date();
   const lun=ldpSolar2Lunar(now.getDate(),now.getMonth()+1,now.getFullYear());
@@ -439,120 +421,175 @@ function ldpFmtSolar(d){return `${ldpPad(d.getDate())}/${ldpPad(d.getMonth()+1)}
   document.getElementById('pageLunar').textContent=`${days[now.getDay()]} · Ngày ${lun.day} tháng ${lun.month}${lun.isLeap?' (nhuận)':''} năm ${lun.canChiYear}`;
 })();
 
+function limitWords(text, max) {
+  const words = text.trim().split(/\s+/);
+  if (words.length <= max) return text.trim();
+  return words.slice(0, max).join(' ') + '…';
+}
+
 const ALL_BANKS=['Ban Tri Sự','Ban Văn Hóa TT','Ban An Sinh','Ban Quản Chúng','Ban An Ninh','Ban Cung Ứng Vật Tư','Ban Hỗ Trợ CVT','Ban Hương Đăng','Ban Môi Trường'];
-function randomLikedBy(){const shuffled=[...ALL_BANKS].sort(()=>Math.random()-.5);const count=1+Math.floor(Math.random()*5);return shuffled.slice(0,count);}
+function randomLikedBy(){const shuffled=[...ALL_BANKS].sort(()=>Math.random()-.5);return shuffled.slice(0,1+Math.floor(Math.random()*5));}
 
 const notifData=[
   {
-    id:1,
-    color:'red',
-    ban:'Ban Tri Sự',
+    id:1,color:'red',ban:'Ban Tri Sự',
     title:'BÁO CÁO QUÝ I CHƯA NỘP – HẠN CHÓT 08H00 NGÀY 22/3 ÂM LỊCH',
-    excerpt:'Ban Tri Sự kính thông báo đến nay vẫn còn một số ban chưa hoàn thành nộp báo cáo tổng kết hoạt động Quý I năm 2026. Đây là công việc bắt buộc theo quy chế nội bộ đã thống nhất từ đầu năm.',
-    fullContent:`<p>Kính thưa Quý Ban và toàn thể đại chúng,</p><p>Ban Tri Sự kính thông báo đến nay vẫn còn một số ban <strong>chưa hoàn thành nộp báo cáo</strong> tổng kết hoạt động Quý I năm 2026. Đây là công việc bắt buộc theo quy chế hoạt động nội bộ đã được thống nhất từ đầu năm.</p><p>Danh sách các ban chưa nộp báo cáo tính đến 07h00 hôm nay:</p><ul><li>Ban Hương Đăng</li><li>Ban Nghi Lễ</li><li>Ban Bảo tàng</li><li>Ban Thị giả</li><li>Ban Vườn</li></ul><p><strong>⏰ Hạn chót nộp báo cáo: 08h00 ngày 22/3 Âm Lịch.</strong></p><p>Các ban trên vui lòng hoàn thành và nộp báo cáo đúng hạn. Sau thời điểm trên, Ban Tri Sự sẽ ghi nhận vào biên bản họp định kỳ và báo cáo lên Ban Quản Chúng.</p><p>Trân trọng kính báo.</p>`,
-    time:'21/3 Âm Lịch · 07:00',
-    lunar:'21/3 Âm Lịch · 07:00',
-    likedBy:randomLikedBy(),
-    img:'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80',
-    edited:true
+    excerpt:'Ban Tri Sự kính thông báo đến nay vẫn còn một số ban chưa hoàn thành nộp báo cáo tổng kết hoạt động Quý I năm 2026. Đây là công việc bắt buộc theo quy chế nội bộ đã thống nhất từ đầu năm. Kính đề nghị các ban liên quan khẩn trương hoàn thành trước thời hạn quy định.',
+    fullContent:`<p>Kính thưa Quý Ban và toàn thể đại chúng,</p><p>Ban Tri Sự kính thông báo đến nay vẫn còn một số ban <strong>chưa hoàn thành nộp báo cáo</strong> tổng kết hoạt động Quý I năm 2026.</p><p>Danh sách các ban chưa nộp:</p><ul><li>Ban Hương Đăng</li><li>Ban Nghi Lễ</li><li>Ban Bảo tàng</li><li>Ban Thị giả</li><li>Ban Vườn</li></ul><p><strong>⏰ Hạn chót: 08h00 ngày 22/3 Âm Lịch.</strong></p><p>Trân trọng kính báo.</p>`,
+    lunar:'21/3 Âm Lịch · 07:00',likedBy:randomLikedBy(),
+    img:'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80',edited:true
   },
   {
-    id:2,
-    color:'red',
-    ban:'Ban Quản Chúng',
+    id:2,color:'red',ban:'Ban Quản Chúng',
     title:'DANH SÁCH PHẬT TỬ ĐĂNG KÝ CÔNG QUẢ THÁNG 4 ÂM LỊCH',
     excerpt:'Ban Quản Chúng kính thông báo danh sách Phật tử đã đăng ký tham gia công quả trong tháng 4 Âm Lịch. Đề nghị các Phật tử trong danh sách xác nhận lại lịch và có mặt đúng giờ tại các bộ phận được phân công.',
-    fullContent:`<p>Kính bạch toàn thể đại chúng và quý Phật tử,</p><p>Ban Quản Chúng kính thông báo <strong>danh sách Phật tử đăng ký công quả tháng 4 Âm Lịch</strong> như sau:</p><p><strong>🧹 Bộ phận Vệ Sinh – Môi Trường:</strong></p><ul><li>Phật tử Diệu Liên – sáng thứ Hai, Tư, Sáu</li><li>Phật tử Minh Tâm – sáng thứ Ba, Năm, Bảy</li><li>Phật tử Quảng Hòa – cuối tuần toàn ngày</li></ul><p><strong>🍚 Bộ phận Nhà Bếp – Hậu Cần:</strong></p><ul><li>Phật tử Diệu Phước – nấu cơm trưa hàng ngày</li><li>Phật tử Thiện Nhân – phụ bếp buổi sáng</li><li>Phật tử Ngọc Hoa – phụ bếp cuối tuần</li></ul><p><strong>🪔 Bộ phận Hương Đăng – Lễ Bái:</strong></p><ul><li>Phật tử Diệu Thanh – thắp hương buổi sáng hàng ngày</li><li>Phật tử Minh Huệ – trực lễ các ngày Sóc Vọng</li></ul><p><strong>📋 Lưu ý:</strong> Phật tử có thay đổi lịch vui lòng báo trước cho Ban Quản Chúng ít nhất <strong>2 ngày</strong> để kịp thời điều phối. Mọi thắc mắc liên hệ trực tiếp tại văn phòng Ban Quản Chúng.</p><p>Nam Mô Bổn Sư Thích Ca Mâu Ni Phật 🙏</p>`,
-    time:'20/3 Âm Lịch · 08:00',
-    lunar:'20/3 Âm Lịch · 08:00',
-    likedBy:randomLikedBy(),
-    img:null,
-    edited:false
+    fullContent:`<p>Ban Quản Chúng kính thông báo <strong>danh sách Phật tử đăng ký công quả tháng 4 Âm Lịch</strong>.</p><ul><li>Phật tử Diệu Liên – Vệ Sinh sáng T2, T4, T6</li><li>Phật tử Minh Tâm – Vệ Sinh sáng T3, T5, T7</li><li>Phật tử Quảng Hòa – cuối tuần toàn ngày</li></ul><p>Nam Mô Bổn Sư Thích Ca Mâu Ni Phật 🙏</p>`,
+    lunar:'20/3 Âm Lịch · 08:00',likedBy:randomLikedBy(),img:null,edited:false
   },
   {
-    id:3,
-    color:'orange',
-    ban:'Ban Tri Sự',
+    id:3,color:'orange',ban:'Ban Tri Sự',
     title:'HỌP TOÀN BAN CHUẨN BỊ LỄ PHẬT ĐẢN 2026 – 14H00 NGÀY 25/3 ÂM LỊCH',
     excerpt:'Ban Tri Sự mời tất cả trưởng ban tham dự buổi họp chuẩn bị Lễ Phật Đản 2026 vào lúc 14h00 ngày 25/3 Âm Lịch tại Chánh Điện. Nội dung: phân công nhiệm vụ, kế hoạch trang trí và lịch trình sự kiện toàn ngày.',
-    fullContent:`<p>Kính mời toàn thể Trưởng Ban tham dự buổi họp do <strong>Ban Tri Sự</strong> triệu tập nhằm chuẩn bị <strong>Lễ Phật Đản 2026</strong>.</p><p><strong>Thời gian:</strong> 14h00 ngày 25/3 Âm Lịch<br><strong>Địa điểm:</strong> Chánh Điện – Tầng 1</p><p>Chương trình họp gồm các nội dung chính:</p><ul><li>Thông qua kế hoạch tổng thể do Ban Tri Sự soạn thảo</li><li>Phân công nhiệm vụ chi tiết cho từng ban</li><li>Thống nhất kế hoạch trang trí khuôn viên và Chánh Điện</li><li>Duyệt lịch trình nghi lễ và các hoạt động trong ngày Phật Đản</li><li>Phân bổ ngân sách và danh mục vật tư cần chuẩn bị</li></ul><p>Đề nghị các Trưởng Ban sắp xếp tham dự đầy đủ và đúng giờ. Vắng mặt vui lòng báo trước cho Ban Tri Sự ít nhất một ngày.</p>`,
-    time:'21/3 Âm Lịch · 09:15',
-    lunar:'21/3 Âm Lịch · 09:15',
-    likedBy:randomLikedBy(),
-    img:'https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&h=450&fit=crop&q=80',
-    edited:false
+    fullContent:`<p>Kính mời toàn thể Trưởng Ban tham dự buổi họp chuẩn bị <strong>Lễ Phật Đản 2026</strong>.</p><p><strong>Thời gian:</strong> 14h00 ngày 25/3 Âm Lịch<br><strong>Địa điểm:</strong> Chánh Điện – Tầng 1</p><ul><li>Thông qua kế hoạch tổng thể</li><li>Phân công nhiệm vụ chi tiết</li><li>Duyệt lịch trình nghi lễ</li></ul>`,
+    lunar:'21/3 Âm Lịch · 09:15',likedBy:randomLikedBy(),
+    img:'https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&h=450&fit=crop&q=80',edited:false
   },
   {
-    id:4,
-    color:'orange',
-    ban:'Ban Tri Sự',
+    id:4,color:'orange',ban:'Ban Tri Sự',
     title:'QUYẾT TOÁN THÁNG 3 ÂM LỊCH – NỘP TRƯỚC 15H00 NGÀY 24/3 ÂM LỊCH',
     excerpt:'Ban Tri Sự nhắc nhở tất cả các ban hoàn thành hồ sơ quyết toán tháng 3 Âm Lịch. Chứng từ hợp lệ nộp về văn phòng Ban Tri Sự trước 15h00 ngày 24/3 Âm Lịch để tổng hợp báo cáo tài chính định kỳ.',
-    fullContent:`<p>Kính gửi các Ban,</p><p>Ban Tri Sự nhắc nhở toàn thể các ban hoàn thành <strong>hồ sơ quyết toán tháng 3 Âm Lịch</strong> theo đúng quy trình và thời hạn quy định.</p><p><strong>⏰ Hạn nộp: trước 15h00 ngày 24/3 Âm Lịch.</strong></p><p>Hồ sơ quyết toán bao gồm:</p><ul><li>Bảng kê chi tiêu có chữ ký trưởng ban xác nhận</li><li>Toàn bộ chứng từ, hóa đơn hợp lệ kèm theo</li><li>Báo cáo tóm tắt hoạt động trong tháng (nếu có phát sinh chi phí bất thường)</li></ul><p>Các ban nộp trễ sẽ được ghi nhận trong biên bản họp định kỳ và ảnh hưởng đến đánh giá hoạt động. Mọi thắc mắc về biểu mẫu vui lòng liên hệ trực tiếp Ban Tri Sự trước ngày 23/3 Âm Lịch.</p>`,
-    time:'21/3 Âm Lịch · 06:45',
-    lunar:'21/3 Âm Lịch · 06:45',
-    likedBy:randomLikedBy(),
-    img:'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop&q=80',
-    edited:false
+    fullContent:`<p>Ban Tri Sự nhắc nhở các ban hoàn thành <strong>hồ sơ quyết toán tháng 3 Âm Lịch</strong>.</p><p><strong>⏰ Hạn nộp: trước 15h00 ngày 24/3 Âm Lịch.</strong></p><ul><li>Bảng kê chi tiêu có chữ ký trưởng ban</li><li>Chứng từ, hóa đơn hợp lệ</li><li>Báo cáo tóm tắt hoạt động</li></ul>`,
+    lunar:'21/3 Âm Lịch · 06:45',likedBy:randomLikedBy(),
+    img:'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop&q=80',edited:false
   },
   {
-    id:5,
-    color:'yellow',
-    ban:'Ban Quản Chúng',
+    id:5,color:'yellow',ban:'Ban Quản Chúng',
     title:'THỜI KHÓA BUỔI SÁNG – QUÉT SÂN CHÙA THÁNG 4 ÂM LỊCH',
     excerpt:'Ban Quản Chúng thông báo lịch phân công thời khóa quét sân chùa buổi sáng tháng 4 Âm Lịch. Đề nghị toàn thể đại chúng và Phật tử công quả thực hiện đúng giờ, giữ gìn cảnh quan thanh tịnh khuôn viên chùa.',
-    fullContent:`<p>Ban Quản Chúng kính thông báo <strong>thời khóa quét sân chùa buổi sáng tháng 4 Âm Lịch</strong> đến toàn thể đại chúng và Phật tử công quả.</p><p><strong>⏰ Giờ thực hiện: 5h00 – 6h00 sáng hàng ngày</strong> (trước thời công phu sáng)</p><p><strong>Phân công khu vực theo nhóm:</strong></p><ul><li><strong>Nhóm 1 – Sân Chánh Điện:</strong> Thứ Hai, Tư, Sáu – Phật tử Diệu Liên, Minh Tâm phụ trách</li><li><strong>Nhóm 2 – Sân Tăng Xá & Hành Lang:</strong> Thứ Ba, Năm, Bảy – Phật tử Quảng Hòa, Thiện Nhân phụ trách</li><li><strong>Nhóm 3 – Vườn & Cổng Tam Quan:</strong> Chủ Nhật – toàn thể đại chúng luân phiên</li></ul><p><strong>📋 Lưu ý:</strong></p><ul><li>Dụng cụ quét lấy tại kho Ban Môi Trường, hoàn trả sau khi dùng xong</li><li>Lá và rác tập kết đúng điểm quy định, không để rải rác</li><li>Trường hợp mưa hoặc có lý do đặc biệt, báo trước cho Ban Quản Chúng</li></ul><p>Nam Mô Bổn Sư Thích Ca Mâu Ni Phật 🙏</p>`,
-    time:'19/3 Âm Lịch · 10:00',
-    lunar:'19/3 Âm Lịch · 10:00',
-    likedBy:randomLikedBy(),
-    img:'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&h=450&fit=crop&q=80',
-    edited:false
+    fullContent:`<p>Ban Quản Chúng thông báo <strong>thời khóa quét sân chùa buổi sáng tháng 4 Âm Lịch</strong>.</p><p><strong>⏰ 5h00 – 6h00 sáng hàng ngày</strong></p><ul><li>Nhóm 1 – Sân Chánh Điện: T2, T4, T6</li><li>Nhóm 2 – Tăng Xá & Hành Lang: T3, T5, T7</li><li>Nhóm 3 – Vườn & Cổng: Chủ Nhật</li></ul><p>Nam Mô Bổn Sư Thích Ca Mâu Ni Phật 🙏</p>`,
+    lunar:'19/3 Âm Lịch · 10:00',likedBy:randomLikedBy(),
+    img:'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&h=450&fit=crop&q=80',edited:false
   },
 ];
 
 const colorMap={
-  red:{cls:'c-red',dot:'#c0392b',label:'Khẩn Cấp',badgeBg:'#fdecea',badgeColor:'#c0392b'},
+  red:   {cls:'c-red',   dot:'#c0392b',label:'Khẩn Cấp', badgeBg:'#fdecea',badgeColor:'#c0392b'},
   orange:{cls:'c-orange',dot:'#e8720a',label:'Quan Trọng',badgeBg:'#fff0e4',badgeColor:'#e8720a'},
-  green:{cls:'c-green',dot:'#1a5c3a',label:'Bình Thường',badgeBg:'#e8f5ee',badgeColor:'#1a5c3a'},
-  teal:{cls:'c-teal',dot:'#00796b',label:'Bình Thường',badgeBg:'#e0f2f1',badgeColor:'#00796b'},
-  yellow:{cls:'c-yellow',dot:'#c9950a',label:'Tin Tức',badgeBg:'#fffbdf',badgeColor:'#c9950a'}
+  green: {cls:'c-green', dot:'#1a5c3a',label:'Bình Thường',badgeBg:'#e8f5ee',badgeColor:'#1a5c3a'},
+  teal:  {cls:'c-teal',  dot:'#00796b',label:'Bình Thường',badgeBg:'#e0f2f1',badgeColor:'#00796b'},
+  yellow:{cls:'c-yellow',dot:'#c9950a',label:'Tin Tức',  badgeBg:'#fffbdf',badgeColor:'#c9950a'}
 };
-const sections=[{key:'red',name:'Khẩn Cấp'},{key:'orange',name:'Quan Trọng'},{key:'green',name:'Bình Thường'},{key:'yellow',name:'Tin Tức'}];
 
+/* ── Logged-in user context ── */
+const CURRENT_BAN = 'Ban Tri Sự';
+
+/* ── Card renderer ── */
 function renderCard(n){
   const cm=colorMap[n.color];
   const hasImg=!!n.img;
   const likedBy=n.likedBy||[];
   const likeCount=likedBy.length;
+  const isOwner = n.ban === CURRENT_BAN;
+  const excerptText=limitWords(n.excerpt,50);
   const popoverItems=likedBy.map(b=>`<div class="like-popover-item">${b}</div>`).join('');
-  const popoverContent=likeCount>0?`<div class="like-popover-title">Đã thích</div><div class="like-popover-list">${popoverItems}</div>`:`<div class="like-popover-empty">Chưa có lượt thích</div>`;
-  const metaHtml=`<div class="notif-meta"><span>📋 ${n.ban}</span><span class="notif-meta-sep">·</span><span>${n.lunar}</span>${n.edited?`<span class="notif-meta-sep">·</span><span class="edited-badge">✏️ Đã chỉnh sửa</span>`:''}<div class="notif-like" onclick="toggleLikePopover(event,'lp-${n.id}')">👍 ${likeCount}<div class="like-popover" id="lp-${n.id}">${popoverContent}</div></div></div>`;
-  if(!hasImg){
-    return`<div class="notif-card ${cm.cls} no-img"><div class="notif-body"><div class="notif-title-row"><div class="notif-dot" style="background:${cm.dot}"></div><div class="notif-title">${n.title}</div></div><div class="notif-excerpt-wrapper">${n.excerpt} <span class="notif-read-more" onclick="openDetail(${n.id})">Xem chi tiết →</span></div>${metaHtml}</div></div>`;
-  }
-  return`<div class="notif-card ${cm.cls} has-img-new"><div class="notif-title-top"><div class="notif-dot" style="background:${cm.dot};margin-top:5px;flex-shrink:0"></div><div class="notif-title">${n.title}</div></div><div class="notif-bottom-row"><div class="notif-img"><img src="${n.img}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="notif-side"><div class="notif-excerpt-wrapper">${n.excerpt} <span class="notif-read-more" onclick="openDetail(${n.id})">Xem chi tiết →</span></div>${metaHtml}</div></div></div>`;
+  const popoverContent=likeCount>0
+    ?`<div class="like-popover-title">Đã thích</div><div class="like-popover-list">${popoverItems}</div>`
+    :`<div class="like-popover-empty">Chưa có lượt thích</div>`;
+  const editBtnHtml = isOwner ? `
+    <div class="edit-btn" onclick="toggleEditPopup(event,'ep-${n.id}')" title="Chỉnh sửa">
+      ✏️
+      <div class="edit-popup" id="ep-${n.id}">
+        <div class="edit-popup-item" onclick="openEditModal(${n.id})">✏️ Chỉnh sửa thông báo</div>
+        <div class="edit-popup-sep"></div>
+        <div class="edit-popup-item danger" onclick="deleteNotif(${n.id})">🗑️ Xóa thông báo</div>
+      </div>
+    </div>` : '';
+  const metaHtml=`
+    <div class="notif-meta">
+      <span>📋 ${n.ban}</span>
+      <span class="notif-meta-sep">·</span>
+      <span>${n.lunar}</span>
+      ${n.edited?`<span class="notif-meta-sep">·</span><span class="edited-badge">Đã chỉnh sửa</span>`:''}
+      ${editBtnHtml}
+      <div class="notif-like" onclick="toggleLikePopover(event,'lp-${n.id}')">
+        👍 ${likeCount}
+        <div class="like-popover" id="lp-${n.id}">${popoverContent}</div>
+      </div>
+    </div>`;
+  const imgHtml=hasImg
+    ?`<div class="notif-img"><img src="${n.img}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`
+    :`<div class="notif-img" style="display:none"></div>`;
+  return `
+    <div class="notif-card ${cm.cls}${hasImg?'':' no-img'}" id="card-${n.id}">
+      ${imgHtml}
+      <div class="notif-body">
+        <div class="notif-title-row">
+          <div class="notif-dot" style="background:${cm.dot}"></div>
+          <div class="notif-title">${n.title}</div>
+        </div>
+        <div class="notif-excerpt-wrapper">
+          ${excerptText}
+          <span class="notif-read-more" onclick="openDetail(${n.id})">Xem chi tiết →</span>
+        </div>
+        ${metaHtml}
+      </div>
+    </div>`;
 }
 
 function renderFeed(data){
   const feed=document.getElementById('feed');
   let html='';
-  sections.forEach(sec=>{
-    const items=data.filter(n=>n.color===sec.key);
-    if(currentFilter!=='all'&&currentFilter!==sec.key)return;
-    if(currentFilter==='all'&&!items.length)return;
-    const cm=colorMap[sec.key];
-    html+=`<div class="section-block" data-section="${sec.key}"><div class="section-head"><div class="section-dot" style="background:${cm.dot}"></div><div class="section-name" style="color:${cm.dot}">${sec.name}</div><div class="section-count">${items.length?`(${items.length})`:''}</div><div class="section-line"></div></div>`;
-    if(!items.length){html+=`<div class="empty-state"><div class="es-icon">📭</div><div class="es-text">Không có thông báo</div></div>`;}
-    else{items.forEach(n=>{html+=renderCard(n);});}
+  /* ── KEY CHANGE: yellow is now its own section ── */
+  const displaySections=[
+    {key:'red',   name:'Khẩn Cấp',   colors:['red']},
+    {key:'orange',name:'Quan Trọng',  colors:['orange']},
+    {key:'green', name:'Bình Thường', colors:['green']},
+    {key:'yellow',name:'Tin Tức',     colors:['yellow']},
+  ];
+  displaySections.forEach(sec=>{
+    /* Bình Thường filter shows both green AND yellow sections */
+    const filterMatch = currentFilter==='all'
+      || currentFilter===sec.key
+      || (currentFilter==='green' && (sec.key==='green' || sec.key==='yellow'));
+    if(!filterMatch) return;
+    const items=data.filter(n=>sec.colors.includes(n.color));
+    if(!items.length) return;
+    const sectionDot=colorMap[sec.key].dot;
+    html+=`<div class="section-block" data-section="${sec.key}">
+      <div class="section-head">
+        <div class="section-dot" style="background:${sectionDot}"></div>
+        <div class="section-name" style="color:${sectionDot}">${sec.name}</div>
+        <div class="section-count">${items.length?`(${items.length})`:''}</div>
+        <div class="section-line"></div>
+      </div>`;
+    items.forEach(n=>{html+=renderCard(n);});
     html+=`</div>`;
   });
   feed.innerHTML=html;
 }
 
-function toggleLikePopover(e,popId){e.stopPropagation();const pop=document.getElementById(popId);if(!pop)return;const isOpen=pop.classList.contains('open');document.querySelectorAll('.like-popover.open').forEach(p=>p.classList.remove('open'));if(!isOpen)pop.classList.add('open');}
-document.addEventListener('click',()=>{document.querySelectorAll('.like-popover.open').forEach(p=>p.classList.remove('open'));});
+function toggleLikePopover(e,popId){
+  e.stopPropagation();
+  const pop=document.getElementById(popId);if(!pop)return;
+  const isOpen=pop.classList.contains('open');
+  document.querySelectorAll('.like-popover.open,.edit-popup.open').forEach(p=>p.classList.remove('open'));
+  if(!isOpen)pop.classList.add('open');
+}
 
-let currentFilter='all';let currentSearch='';
+function toggleEditPopup(e,popId){
+  e.stopPropagation();
+  const pop=document.getElementById(popId);if(!pop)return;
+  const isOpen=pop.classList.contains('open');
+  document.querySelectorAll('.like-popover.open,.edit-popup.open').forEach(p=>p.classList.remove('open'));
+  if(!isOpen)pop.classList.add('open');
+}
+
+document.addEventListener('click',()=>{
+  document.querySelectorAll('.like-popover.open,.edit-popup.open').forEach(p=>p.classList.remove('open'));
+});
+
+let currentFilter='all';
+let currentSearch='';
 const PAGE_SIZE=4;const TOTAL=10;let currentPage=1;
 
 function renderPagination(filtered){
@@ -566,14 +603,58 @@ function renderPagination(filtered){
   html+=`<button class="pg-btn pg-arrow" onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>›</button>`;
   pgEl.innerHTML=html;
 }
-
 function goPage(p){const totalPages=Math.ceil(TOTAL/PAGE_SIZE);if(p<1||p>totalPages)return;currentPage=p;applyFilters();}
 
-function applyFilters(){let data=notifData;if(currentSearch){const q=currentSearch;data=data.filter(n=>n.title.toLowerCase().includes(q)||n.excerpt.toLowerCase().includes(q)||n.ban.toLowerCase().includes(q));}renderFeed(data);const filtered=document.querySelectorAll('.notif-card').length;renderPagination(filtered);}
-function setFilter(color,btn){currentFilter=color;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');applyFilters();}
+function applyFilters(){
+  let data=notifData;
+  if(currentSearch){
+    const q=currentSearch;
+    data=data.filter(n=>n.title.toLowerCase().includes(q)||n.excerpt.toLowerCase().includes(q)||n.ban.toLowerCase().includes(q));
+  }
+  if(currentFilter==='green'){
+    data=data.filter(n=>n.color==='green'||n.color==='yellow');
+  } else if(currentFilter!=='all'){
+    data=data.filter(n=>n.color===currentFilter);
+  }
+  renderFeed(data);
+  const filtered=document.querySelectorAll('.notif-card').length;
+  renderPagination(filtered);
+}
+function setFilter(color,btn){
+  currentFilter=color;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
 function filterSearch(val){currentSearch=val.toLowerCase();applyFilters();}
 applyFilters();
 
+/* ── Delete notification ── */
+function deleteNotif(id){
+  document.querySelectorAll('.edit-popup.open').forEach(p=>p.classList.remove('open'));
+  if(!confirm('Xác nhận xóa thông báo này?'))return;
+  const idx=notifData.findIndex(n=>n.id===id);
+  if(idx>-1){notifData.splice(idx,1);}
+  applyFilters();
+}
+
+/* ── Open edit modal ── */
+function openEditModal(id){
+  document.querySelectorAll('.edit-popup.open').forEach(p=>p.classList.remove('open'));
+  const n=notifData.find(x=>x.id===id);if(!n)return;
+  document.getElementById('modalBox').dataset.editId=id;
+  document.getElementById('formTitle').value=n.title;
+  document.getElementById('formBan').value=n.ban;
+  document.getElementById('rteContent').innerHTML=n.fullContent||n.excerpt;
+  const map3={'red':'p-red','orange':'p-orange','green':'p-green','teal':'p-teal','yellow':'p-green'};
+  document.querySelectorAll('.priority-opt').forEach(o=>o.classList.remove('selected'));
+  const targetClass=map3[n.color]||'p-green';
+  document.querySelector('.priority-opt.'+targetClass)?.classList.add('selected');
+  document.querySelector('.modal-title').textContent='✏️ Chỉnh Sửa Thông Báo';
+  openModal();
+}
+
+/* ── Detail modal ── */
 function openDetail(id){
   const n=notifData.find(x=>x.id===id);if(!n)return;
   const cm=colorMap[n.color];
@@ -581,7 +662,25 @@ function openDetail(id){
   if(n.img)html+=`<img class="detail-hero" src="${n.img}" alt="">`;
   const likedBy=n.likedBy||[];
   const likeTagsHtml=likedBy.length>0?likedBy.map(b=>`<span class="detail-like-tag">👍 ${b}</span>`).join(''):`<span style="font-size:13px;color:#bbb;font-style:italic">Chưa có lượt thích</span>`;
-  html+=`<div class="detail-content"><div class="detail-badge-row"><span class="detail-badge" style="background:${cm.badgeBg};color:${cm.badgeColor}"><span style="width:7px;height:7px;border-radius:50%;background:${cm.dot};display:inline-block"></span>${cm.label}</span><span class="detail-ban">📋 ${n.ban}</span></div><div class="detail-title">${n.title}</div><div class="detail-meta-row"><span>🕐 ${n.lunar}</span>${n.edited?`<span>·</span><span class="edited-badge">✏️ Đã chỉnh sửa</span>`:''}<span style="margin-left:auto">👍 ${likedBy.length}</span></div><div class="detail-body">${n.fullContent||'<p>'+n.excerpt+'</p>'}</div><div class="detail-like-section"><div class="detail-like-title">👍 Các ban đã thích</div><div class="detail-like-tags">${likeTagsHtml}</div></div></div>`;
+  html+=`<div class="detail-content">
+    <div class="detail-badge-row">
+      <span class="detail-badge" style="background:${cm.badgeBg};color:${cm.badgeColor}">
+        <span style="width:7px;height:7px;border-radius:50%;background:${cm.dot};display:inline-block"></span>${cm.label}
+      </span>
+      <span class="detail-ban">📋 ${n.ban}</span>
+    </div>
+    <div class="detail-title">${n.title}</div>
+    <div class="detail-meta-row">
+      <span>🕐 ${n.lunar}</span>
+      ${n.edited?`<span>·</span><span class="edited-badge">✏️ Đã chỉnh sửa</span>`:''}
+      <span style="margin-left:auto">👍 ${likedBy.length}</span>
+    </div>
+    <div class="detail-body">${n.fullContent||'<p>'+n.excerpt+'</p>'}</div>
+    <div class="detail-like-section">
+      <div class="detail-like-title">👍 Các ban đã thích</div>
+      <div class="detail-like-tags">${likeTagsHtml}</div>
+    </div>
+  </div>`;
   document.getElementById('detailModal').innerHTML=html;
   document.getElementById('detailOverlay').classList.add('open');
   document.body.style.overflow='hidden';
@@ -589,11 +688,46 @@ function openDetail(id){
 function closeDetail(){document.getElementById('detailOverlay').classList.remove('open');document.body.style.overflow='';}
 function handleDetailOverlayClick(e){if(e.target===document.getElementById('detailOverlay'))closeDetail();}
 
+/* ── Create modal ── */
 function openModal(){document.getElementById('overlay').classList.add('open');}
-function closeModal(){document.getElementById('overlay').classList.remove('open');}
+function closeModal(){
+  document.getElementById('overlay').classList.remove('open');
+  delete document.getElementById('modalBox').dataset.editId;
+  document.querySelector('.modal-title').textContent='➕ Tạo Thông Báo Mới';
+}
 function handleOverlayClick(e){if(e.target===document.getElementById('overlay'))closeModal();}
 
-function saveNotif(){const title=document.getElementById('formTitle').value.trim();const ban=document.getElementById('formBan').value;const content=document.getElementById('rteContent').innerHTML;const selPriority=document.querySelector('.priority-opt.selected');if(!title||!ban||!content){alert('Vui lòng điền đầy đủ thông tin!');return;}const map2={'p-red':'red','p-orange':'orange','p-green':'green','p-teal':'teal'};const colorClass=[...selPriority.classList].find(c=>c.startsWith('p-'));const color=map2[colorClass]||'green';const now=new Date();const lun=ldpSolar2Lunar(now.getDate(),now.getMonth()+1,now.getFullYear());notifData.unshift({id:Date.now(),color,ban,title,excerpt:content.replace(/<[^>]+>/g,'').substring(0,160),fullContent:content,time:'Vừa xong',lunar:`${lun.day}/${lun.month} Âm Lịch`,likedBy:[],img:null});applyFilters();closeModal();document.getElementById('formTitle').value='';document.getElementById('rteContent').innerHTML='';document.getElementById('formBan').value='';}
+function saveNotif(){
+  const title=document.getElementById('formTitle').value.trim();
+  const ban=document.getElementById('formBan').value;
+  const content=document.getElementById('rteContent').innerHTML;
+  const selPriority=document.querySelector('.priority-opt.selected');
+  if(!title||!ban||!content){alert('Vui lòng điền đầy đủ thông tin!');return;}
+  const map2={'p-red':'red','p-orange':'orange','p-green':'green','p-teal':'teal'};
+  const colorClass=[...selPriority.classList].find(c=>c.startsWith('p-'));
+  const color=map2[colorClass]||'green';
+  const now=new Date();
+  const lun=ldpSolar2Lunar(now.getDate(),now.getMonth()+1,now.getFullYear());
+  const rawExcerpt=content.replace(/<[^>]+>/g,'').substring(0,400);
+  const editId=parseInt(document.getElementById('modalBox').dataset.editId||'0');
+  if(editId){
+    const idx=notifData.findIndex(n=>n.id===editId);
+    if(idx>-1){notifData[idx]={...notifData[idx],color,ban,title,excerpt:rawExcerpt,fullContent:content,edited:true};}
+    delete document.getElementById('modalBox').dataset.editId;
+  } else {
+    notifData.unshift({
+      id:Date.now(),color,ban,title,
+      excerpt:rawExcerpt,fullContent:content,
+      lunar:`${lun.day}/${lun.month} Âm Lịch`,
+      likedBy:[],img:null,edited:false
+    });
+  }
+  applyFilters();closeModal();
+  document.getElementById('formTitle').value='';
+  document.getElementById('rteContent').innerHTML='';
+  document.getElementById('formBan').value='';
+  document.querySelector('.modal-title').textContent='➕ Tạo Thông Báo Mới';
+}
 
 function selectPriority(el){document.querySelectorAll('.priority-opt').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');}
 function execRTE(cmd,val){document.getElementById('rteContent').focus();document.execCommand(cmd,false,val||null);}
@@ -603,6 +737,7 @@ function pickColor(){const colors=['#c0392b','#e8720a','#1a5c3a','#00796b','#2c1
 function insertLink(){const url=prompt('Nhập URL:','https://');if(url)execRTE('createLink',url);}
 function insertEmoji(){const emojis=['🙏','📢','⚠️','✅','❌','📅','🔔','🌸','⭐','📿','🪔','🏛️'];document.getElementById('rteContent').focus();document.execCommand('insertText',false,emojis[Math.floor(Math.random()*emojis.length)]);}
 
+/* ── Date picker ── */
 const ldpState={1:{viewY:new Date().getFullYear(),viewM:new Date().getMonth(),sel:null},2:{viewY:new Date().getFullYear(),viewM:new Date().getMonth(),sel:null}};
 const ldpToday=new Date();
 function ldpBuildCal(idx){const s=ldpState[idx],cal=document.getElementById('ldpCal'+idx),{viewY:y,viewM:m}=s,days=[];const first=new Date(y,m,1);let dow=first.getDay()-1;if(dow<0)dow=6;const prevLast=new Date(y,m,0).getDate();for(let i=dow-1;i>=0;i--)days.push({date:new Date(y,m-1,prevLast-i),other:true});const dim=new Date(y,m+1,0).getDate();for(let d=1;d<=dim;d++)days.push({date:new Date(y,m,d),other:false});const need=Math.ceil(days.length/7)*7;for(let n=1;days.length<need;n++)days.push({date:new Date(y,m+1,n),other:true});let html=`<div class="ldp-hdr"><button class="ldp-nav" onclick="ldpNav(${idx},-1)">‹</button><span class="ldp-title">${LDP_MONTHS[m]} ${y}</span><button class="ldp-nav" onclick="ldpNav(${idx},1)">›</button></div><div class="ldp-wds"><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span class="wd-sun">CN</span></div><div class="ldp-days">`;days.forEach(item=>{const lun=ldpSolar2Lunar(item.date.getDate(),item.date.getMonth()+1,item.date.getFullYear()),isTd=item.date.getFullYear()===ldpToday.getFullYear()&&item.date.getMonth()===ldpToday.getMonth()&&item.date.getDate()===ldpToday.getDate(),isSel=s.sel&&item.date.getFullYear()===s.sel.getFullYear()&&item.date.getMonth()===s.sel.getMonth()&&item.date.getDate()===s.sel.getDate();const cls=['ldp-day',item.other?'ldp-other':'',isTd?'ldp-today':'',isSel?'ldp-sel':'',item.date.getDay()===0?'ldp-sun':'',item.date.getDay()===6?'ldp-sat':''].filter(Boolean).join(' ');const ca=item.other?'':`onclick="ldpSelectDay(${idx},new Date(${item.date.getFullYear()},${item.date.getMonth()},${item.date.getDate()}))"`;html+=`<div class="${cls}" ${ca}><span class="d-sol">${item.date.getDate()}</span><span class="d-lun">${lun.day}/${lun.month}</span></div>`;});html+=`</div>`;if(s.sel){const lun=ldpSolar2Lunar(s.sel.getDate(),s.sel.getMonth()+1,s.sel.getFullYear());html+=`<div class="ldp-foot"><div class="ldp-foot-row"><span class="ldp-foot-lbl">Dương lịch:</span><span class="ldp-foot-val">${ldpFmtSolar(s.sel)}</span></div><div class="ldp-foot-row"><span class="ldp-foot-lbl">Âm lịch:</span><span class="ldp-foot-val lunar">Ngày ${lun.day} tháng ${lun.month}${lun.isLeap?' (nhuận)':''} năm ${lun.canChiYear}</span></div></div>`;}cal.innerHTML=html;}
